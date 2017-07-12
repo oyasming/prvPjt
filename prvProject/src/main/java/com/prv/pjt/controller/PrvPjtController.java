@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prv.pjt.repository.UserRepository;
+//import com.prv.pjt.repository.UserRepository;
 import com.prv.pjt.user.User;
 
 @Controller
@@ -19,13 +20,8 @@ public class PrvPjtController {
 	
 	@Autowired
 	private UserRepository userDao;
-	
-	@GetMapping
-	public String goHome() {
-		return "index";
-	}
 
-	@GetMapping("index.do")
+	@GetMapping(path= {"/", "index.do"})
 	public String index(Model model) {
 		System.out.println("call index");
 		return "index";
@@ -48,9 +44,25 @@ public class PrvPjtController {
 		System.out.println("call admin");
 		
 		List<User> list = (List<User>) userDao.findAll();
-		model.addAllAttributes(list);
+		model.addAttribute("list", list);
 		
 		return "admin";
+	}
+	
+	@GetMapping("join.do")
+	public String joinView(Model model) {
+		System.out.println("call joinView");
+				
+		return "join";
+	}
+	
+	@GetMapping(path="joinUser.do")
+	public String joinUser(User user) {
+		System.out.println("call joinUser");
+		System.out.println(user.toString());
+
+		userDao.save(user);
+		return "redirect:admin";
 	}
 	
 	@RequestMapping("/list")
@@ -64,27 +76,19 @@ public class PrvPjtController {
 	}
 	
 	@RequestMapping("/add")
-
 	@ResponseBody
-
 	public User add(User user){
 
 		User userData = userDao.save(user);
-
 		return userData;
-
-	}
-
-	
+	}	
 
 	@RequestMapping("/view/{id}")
 	@ResponseBody
-	public User view(@PathVariable int id){
-
+	public User view(@PathVariable String id){
+		
 		User userData = userDao.findOne(id);
-
 		return userData;
-
 	}
 
 }

@@ -1,44 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
 </head>
 <body>
-	<!-- ¸µÅ© ¹× °ü¸®ÀÚ ±ÇÇÑ È®ÀÎÇÏ¿© °ü¸®ÀÚ ¸Ş´º Ãâ·Â ÇÊ¿ä -->
-	<a href="/index.do">HOME</a> | <a href="/customer.do">CONTACT US</a> | <a href="/login.do">AGILIN MEMBER</a><br><br><br>
+	<!-- ë§í¬ ë° ê´€ë¦¬ì ê¶Œí•œ í™•ì¸í•˜ì—¬ ê´€ë¦¬ì ë©”ë‰´ ì¶œë ¥ í•„ìš” -->
+	<a href="/index.do">HOME</a> | <a href="/customer.do">CONTACT US</a> | <a href="/login.do">AGILIN MEMBER</a> | <a href="/admin.do">ADMIN PAGE</a><br><br><br>
 	
-	°ü¸®ÀÚ ÆäÀÌÁöÀÔ´Ï´Ù.<br><br>
+	ê´€ë¦¬ì í˜ì´ì§€ì…ë‹ˆë‹¤.<br><br>
 	<table cellpadding="1">
 		<tr>
-			<th>ÀÌ¸§</th>
-			<th>È¸¿ø¾ÆÀÌµğ</th>
-			<th>Á÷Ã¥</th>
-			<th>µî±Ş</th>
+			<th>ì´ë¦„</th>
+			<th>íšŒì›ì•„ì´ë””</th>
+			<th>ì§ì±…</th>
+			<th>ë“±ê¸‰</th>
 		</tr>
-		<tr align="center">
-			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>È¸¿ø¾ÆÀÌµğ </td>
-			<td> </td>
-			<td></td>
-		</tr>
-		<tr align="center">
-			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>È¸¿ø¾ÆÀÌµğ </td>
-			<td> </td>
-			<td></td>
-		</tr>
+		<c:forEach var="data" items="${list}">
+			<tr>
+				<td>${data.name }</td>
+				<td>${data.id }</td>
+				<td>${data.position }</td>					
+				<td>
+					<c:choose>
+						<c:when test="${data.authority == '0'}">ìµœê³ ê´€ë¦¬ì</c:when>
+						<c:when test="${data.authority == '1'}">ê´€ë¦¬ì</c:when>
+						<c:otherwise>ì¼ë°˜</c:otherwise>
+					</c:choose>
+				</td>
+			</tr>
+		</c:forEach>
 		<tr>
-			<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			<td>È¸¿ø¾ÆÀÌµğ </td>
-			<td> </td>
-			<td></td>
+			<td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td><a href="/join.do">íšŒì›ë“±ë¡</a></td>
 		</tr>
 	</table>
 
 	
-	<!-- ·Î±×ÀÎ ½Ã »ç¿ëÀÚ ÀÌ¸§ Ç¥½Ã ÇÊ¿ä -->
+	<!-- ë¡œê·¸ì¸ ì‹œ ì‚¬ìš©ì ì´ë¦„ í‘œì‹œ í•„ìš” -->
 </body>
 </html>

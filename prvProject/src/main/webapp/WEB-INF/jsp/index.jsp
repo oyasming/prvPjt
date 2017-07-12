@@ -1,17 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
 </head>
 <body>
-	<!-- ¸µÅ© ¹× °ü¸®ÀÚ ±ÇÇÑ È®ÀÎÇÏ¿© °ü¸®ÀÚ ¸Þ´º Ãâ·Â ÇÊ¿ä -->
-	<a href="/index.do">HOME</a> | <a href="/customer.do">CONTACT US</a> | <a href="/login.do">AGILIN MEMBER</a><br><br><br>
+	<!-- ë§í¬ ë° ê´€ë¦¬ìž ê¶Œí•œ í™•ì¸í•˜ì—¬ ê´€ë¦¬ìž ë©”ë‰´ ì¶œë ¥ í•„ìš” -->
+	<a href="/index.do">HOME</a> | <a href="/customer.do">CONTACT US</a> | <a href="/login.do">AGILIN MEMBER</a> | <a href="/admin.do">ADMIN PAGE</a><br><br><br>
 	
-	Agilin Soft Home¿¡ ¿À½Å°É È¯¿µÇÕ´Ï´Ù.
+	Agilin Soft Homeì— ì˜¤ì‹ ê±¸ í™˜ì˜í•©ë‹ˆë‹¤.
 	
-	<!-- ·Î±×ÀÎ ½Ã »ç¿ëÀÚ ÀÌ¸§ Ç¥½Ã ÇÊ¿ä -->
+	<!-- ë¡œê·¸ì¸ ì‹œ ì‚¬ìš©ìž ì´ë¦„ í‘œì‹œ í•„ìš” -->
 </body>
 </html>

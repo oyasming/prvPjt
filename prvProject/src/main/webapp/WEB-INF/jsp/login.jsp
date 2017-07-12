@@ -1,35 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
 </head>
 <body>
-	<!-- ¸µÅ© ¹× °ü¸®ÀÚ ±ÇÇÑ È®ÀÎÇÏ¿© °ü¸®ÀÚ ¸Þ´º Ãâ·Â ÇÊ¿ä -->
-	<a href="/index.do">HOME</a> | <a href="/customer.do">CONTACT US</a> | <a href="/login.do">AGILIN MEMBER</a><br><br><br>
+	<!-- ë§í¬ ë° ê´€ë¦¬ìž ê¶Œí•œ í™•ì¸í•˜ì—¬ ê´€ë¦¬ìž ë©”ë‰´ ì¶œë ¥ í•„ìš” -->
+	<a href="/index.do">HOME</a> | <a href="/customer.do">CONTACT US</a> | <a href="/login.do">AGILIN MEMBER</a> | <a href="/admin.do">ADMIN PAGE</a><br><br><br>
 	
-	¾îÁúÀÎ¼ÒÇÁÆ®<br><br>
+	ì–´ì§ˆì¸ì†Œí”„íŠ¸<br><br>
 	<form action="loginAction.do" name="loginAction">
 		<table cellpadding="1">
 			<tr align="center">
 				<td colspan="2" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>È¸¿ø¾ÆÀÌµð </td>
+				<td>íšŒì›ì•„ì´ë”” </td>
 				<td colspan="2"><input name="id" type="text"/> </td>
-				<td rowspan="2"> <input type="submit" value="·Î±×ÀÎ" height="40px"/></td>
+				<td rowspan="2"> <input type="submit" value="ë¡œê·¸ì¸" height="40px"/></td>
 			</tr>
 			<tr align="center">
 				<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>ºñ¹Ð¹øÈ£ </td>
+				<td>ë¹„ë°€ë²ˆí˜¸ </td>
 				<td colspan="2"><input name="pw" type="password"/> </td>
 			</tr>
 			<tr>
-				<td colspan="6"><br><b>È¸¿ø·Î±×ÀÎ¾È³»</b><br>Æí¸®ÇÑ ¼­ºñ½º ÀÌ¿ëÀ» À§ÇÏ¿©<br>¾ÆÀÌµð,ÆÐ½º¿öµå ÀÔ·Â ÇÏ½Å ÈÄ ·Î±×ÀÎ ¹öÆ°À» ´­·¯ÁÖ¼¼¿ä.</td>
+				<td colspan="6"><br><b>íšŒì›ë¡œê·¸ì¸ì•ˆë‚´</b><br>íŽ¸ë¦¬í•œ ì„œë¹„ìŠ¤ ì´ìš©ì„ ìœ„í•˜ì—¬<br>ì•„ì´ë””,íŒ¨ìŠ¤ì›Œë“œ ìž…ë ¥ í•˜ì‹  í›„ ë¡œê·¸ì¸ ë²„íŠ¼ì„ ëˆŒëŸ¬ì£¼ì„¸ìš”.</td>
 			</tr>
 		</table>
 	</form>
 	
-	<!-- ·Î±×ÀÎ ½Ã »ç¿ëÀÚ ÀÌ¸§ Ç¥½Ã ÇÊ¿ä -->
+	<!-- ë¡œê·¸ì¸ ì‹œ ì‚¬ìš©ìž ì´ë¦„ í‘œì‹œ í•„ìš” -->
 </body>
 </html>
