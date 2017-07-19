@@ -7,5 +7,5 @@ import com.prv.pjt.user.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
-
+	User findByUsername(String username);
 }

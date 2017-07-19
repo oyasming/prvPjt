@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,11 +9,15 @@
 </head>
 <body>
 	<!-- 링크 및 관리자 권한 확인하여 관리자 메뉴 출력 필요 -->
-	<a href="/index.do">HOME</a> | <a href="/customer.do">CONTACT US</a> | <a href="/login.do">AGILIN MEMBER</a> | <a href="/admin.do">ADMIN PAGE</a><br><br><br>
+	<jsp:include page="menu.jsp">
+		<jsp:param name="btnNO" value="0"/>
+	</jsp:include>
 	
 	CONTACT US<br><br>
-	042-472-2904로 문의해 주세요.
+	042-472-2904로 문의해 주세요.<br><br>
 	
-	<!-- 로그인 시 사용자 이름 표시 필요 -->
+	<c:if test="${not empty name}">
+		 ${name} 님 반갑습니다.
+	</c:if>
 </body>
 </html>

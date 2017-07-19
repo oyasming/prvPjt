@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Transient;
+
 
 @Entity
 @Table(name="users")
@@ -16,11 +20,16 @@ public class User {
 	@GeneratedValue
 	private Integer index;
 	
-	@Column(name = "id")
-	private String id;
+	@Column(name = "username")
+	@Length(min=6, message="6글자 이상 입력해 주십시오.")
+    @NotEmpty(message = "*Please provide an email")
+	private String username;
 
-	@Column(name = "pw")
-	private String pw;
+	@Column(name = "password")
+	@Length(min=6, message="6글자 이상 입력해 주십시오.")
+    @NotEmpty(message = "*Please provide an email")
+//	@Transient
+	private String password;
 
 	@Column(name = "name")
 	private String name;
@@ -36,10 +45,10 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(String id, String pw, String name, String position, int authority) {
+	public User(String username, String password, String name, String position, int authority) {
 //		super();
-		this.id = id;
-		this.pw = pw;
+		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.position = position;
 		this.authority = authority;
@@ -54,17 +63,17 @@ public class User {
 		this.index = index;
 	}
 
-	public String getId() {
-		return id;
+	public String getUsername() {
+		return username;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getPw() {
-		return pw;
+	public String getPassword() {
+		return password;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getName() {
 		return name;
@@ -87,6 +96,6 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return this.id + this.pw + this.name + this.position + this.authority;
+		return this.index + this.username + this.password + this.name + this.position + this.authority;
 	}
 }

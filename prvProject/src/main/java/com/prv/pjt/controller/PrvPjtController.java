@@ -2,15 +2,20 @@ package com.prv.pjt.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.prv.pjt.repository.UserRepository;
+import com.prv.pjt.service.UserService;
 //import com.prv.pjt.repository.UserRepository;
 import com.prv.pjt.user.User;
 
@@ -20,75 +25,76 @@ public class PrvPjtController {
 	
 	@Autowired
 	private UserRepository userDao;
+	@Autowired
+	private UserService userService;
 
 	@GetMapping(path= {"/", "index.do"})
-	public String index(Model model) {
+	public ModelAndView index(HttpSession session) {
 		System.out.println("call index");
-		return "index";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = userDao.findByUsername(authentication.getName());
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        if ( user != null)
+        	modelAndView.addObject("name", user.getName());
+
+		return modelAndView;
 	}
 	
 	@GetMapping("customer.do")
-	public String customer(Model model) {
+	public ModelAndView customer(Model model) {
 		System.out.println("call customer");
-		return "customer";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = userDao.findByUsername(authentication.getName());
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer");
+        if ( user != null)
+        	modelAndView.addObject("name", user.getName());
+
+		return modelAndView;
 	}
-	
+
 	@GetMapping("login.do")
-	public String login(Model model) {
+	public ModelAndView login(User user, HttpSession session) {
 		System.out.println("call login");
-		return "login";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        session.setAttribute("username", authentication.getName());
+        modelAndView.addObject("username", authentication.getName());
+        
+		return modelAndView;
 	}
 	
 	@GetMapping("admin.do")
-	public String admin(Model model) {
+	public ModelAndView admin(Model model) {
 		System.out.println("call admin");
-		
 		List<User> list = (List<User>) userDao.findAll();
 		model.addAttribute("list", list);
-		
-		return "admin";
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/admin/main");
+
+		return modelAndView;
 	}
 	
 	@GetMapping("join.do")
 	public String joinView(Model model) {
 		System.out.println("call joinView");
 				
-		return "join";
+		return "/admin/join";
 	}
 	
-	@GetMapping(path="joinUser.do")
+	@PostMapping(path="joinUser.do")
 	public String joinUser(User user) {
 		System.out.println("call joinUser");
 		System.out.println(user.toString());
 
-		userDao.save(user);
-		return "redirect:admin";
-	}
-	
-	@RequestMapping("/list")
-	@ResponseBody
-	public List<User> list(){
-
-		List<User> memberList = (List<User>) userDao.findAll();
-
-		return memberList;
-
-	}
-	
-	@RequestMapping("/add")
-	@ResponseBody
-	public User add(User user){
-
-		User userData = userDao.save(user);
-		return userData;
-	}	
-
-	@RequestMapping("/view/{id}")
-	@ResponseBody
-	public User view(@PathVariable String id){
-		
-		User userData = userDao.findOne(id);
-		return userData;
+		userService.saveUser(user);
+		return "redirect:admin.do";
 	}
 
 }
