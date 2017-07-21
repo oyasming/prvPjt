@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 		// TODO Auto-generated method stub
 		// 리소스(이미지, css, 등등) 폴더를 예외처리 한다.
-		//web.ignoring().antMatchers("/**");
+		web.ignoring().antMatchers("/resources/**", "/css/**");
 	}
 
 	@Override
@@ -42,13 +43,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/index.do").permitAll()
 			.antMatchers("/customer.do").permitAll()
 			.antMatchers("/login.do").permitAll()
-//			.antMatchers("/join.do").permitAll() // todo
-			.antMatchers("/admin.do").authenticated()
+			.antMatchers("/admin.do", "/join**").authenticated()
 			.and()
 			.csrf().disable()
 			.formLogin().loginPage("/login.do")
 			.failureUrl("/login.do?error=true").defaultSuccessUrl("/index.do")
-			.usernameParameter("username").passwordParameter("password");
+			.usernameParameter("username").passwordParameter("password")
+			.and()
+			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logoutProcess.do"))
+			.logoutSuccessUrl("/login.do")
+			.and()
+			.exceptionHandling().accessDeniedPage("/");
+		// 로그아웃 처리 미구현
+		// 세션 처리 미구현
 //			.and()
 //			.sessionManagement().maximumSessions(1).expiredUrl("/login.do");
 	}

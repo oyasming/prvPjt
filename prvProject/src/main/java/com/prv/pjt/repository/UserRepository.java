@@ -1,11 +1,16 @@
 package com.prv.pjt.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.prv.pjt.user.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, String> {
-	User findByUsername(String username);
+public interface UserRepository extends JpaRepository<User, String> {
+	User findUserByUsername(String username);
+	
+	@Query(value = "select ifnull(max(substring(concat(seq), 5, 4)), \'0000\') seq from users WHERE substring(concat(seq), 1, 4) =  year(curdate())", nativeQuery=true)
+	String findCurYearMaxSeq();
 }

@@ -1,17 +1,22 @@
 package com.prv.pjt.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.prv.pjt.repository.UserRepository;
@@ -24,7 +29,7 @@ import com.prv.pjt.user.User;
 public class PrvPjtController {
 	
 	@Autowired
-	private UserRepository userDao;
+	private UserRepository userRepository;
 	@Autowired
 	private UserService userService;
 
@@ -32,7 +37,7 @@ public class PrvPjtController {
 	public ModelAndView index(HttpSession session) {
 		System.out.println("call index");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = userDao.findByUsername(authentication.getName());
+		User user = userRepository.findUserByUsername(authentication.getName());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
@@ -46,7 +51,7 @@ public class PrvPjtController {
 	public ModelAndView customer(Model model) {
 		System.out.println("call customer");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = userDao.findByUsername(authentication.getName());
+		User user = userRepository.findUserByUsername(authentication.getName());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("customer");
@@ -62,9 +67,13 @@ public class PrvPjtController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        session.setAttribute("username", authentication.getName());
-        modelAndView.addObject("username", authentication.getName());
+        System.out.println("login.do username :" + authentication.getName());
+        if (authentication.getName() != "anonymousUser" ) {
+            modelAndView.addObject("username", authentication.getName());
+            modelAndView.setViewName("logout");
+        } else {
+            modelAndView.setViewName("login");
+        }
         
 		return modelAndView;
 	}
@@ -72,7 +81,7 @@ public class PrvPjtController {
 	@GetMapping("admin.do")
 	public ModelAndView admin(Model model) {
 		System.out.println("call admin");
-		List<User> list = (List<User>) userDao.findAll();
+		List<User> list = (List<User>) userRepository.findAll();
 		model.addAttribute("list", list);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -89,12 +98,45 @@ public class PrvPjtController {
 	}
 	
 	@PostMapping(path="joinUser.do")
-	public String joinUser(User user) {
+	public ModelAndView joinUser(@Valid User user, BindingResult bindingResult) {
 		System.out.println("call joinUser");
-		System.out.println(user.toString());
+        ModelAndView modelAndView = new ModelAndView();
+        User userExists = userService.findByUsername(user.getUsername());
+        if (userExists != null) {
+            bindingResult
+                    .rejectValue("username", "error.user",
+                            "There is already a user registered with the username provided");
+        }
+        if (bindingResult.hasErrors()) {
+        	List<ObjectError> list = bindingResult.getAllErrors();
+        	modelAndView.addObject("bindingError", list);
+        	for (Iterator<ObjectError> iterator = list.iterator(); iterator.hasNext();) {
+				ObjectError objectError = (ObjectError) iterator.next();
+				System.out.println(objectError.getDefaultMessage() + " :: " + objectError.getObjectName());
+			}
+            modelAndView.setViewName("/admin/join");
+        } else {
+    		userService.saveUser(user);
+            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("user", new User());
+            modelAndView.setViewName("redirect:/admin.do");
 
-		userService.saveUser(user);
-		return "redirect:admin.do";
+        }
+		return modelAndView;
+	}
+	
+	// TODO ajax 아이디 중복 체크 구현 필요. 될려나
+	@PostMapping("duplicateUsernameCheck.do")
+	@ResponseBody
+	public String duplicateUsernameCheck(String username) {
+		System.out.println("call duplicateUsernameCheck");
+		if (userRepository.findUserByUsername(username) != null) {
+			System.out.println("False");
+			return "False";
+		} else {
+			System.out.println("True");
+			return "True";
+		}
 	}
 
 }

@@ -2,7 +2,6 @@ package com.prv.pjt.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,14 +10,13 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
-
 @Entity
 @Table(name="users")
 public class User {
 
 	@Id
-	@GeneratedValue
-	private Integer index;
+	@Column(name = "seq")
+	private Integer seq;
 	
 	@Column(name = "username")
 	@Length(min=6, message="6글자 이상 입력해 주십시오.")
@@ -32,9 +30,11 @@ public class User {
 	private String password;
 
 	@Column(name = "name")
+    @NotEmpty(message = "*Please provide an name")
 	private String name;
 	
 	@Column(name = "position")
+    @NotEmpty(message = "*Please provide an position")
 	private String position;
 
 	@Column(name = "authority")
@@ -45,8 +45,9 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public User(String username, String password, String name, String position, int authority) {
+	public User(int seq, String username, String password, String name, String position, int authority) {
 //		super();
+		this.seq = seq;
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -54,13 +55,12 @@ public class User {
 		this.authority = authority;
 	}
 	
-	
-	public Integer getIndex() {
-		return index;
+	public Integer getSeq() {
+		return seq;
 	}
 
-	public void setIndex(Integer index) {
-		this.index = index;
+	public void setSeq(Integer seq) {
+		this.seq = seq;
 	}
 
 	public String getUsername() {
@@ -96,6 +96,6 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return this.index + this.username + this.password + this.name + this.position + this.authority;
+		return this.seq + this.username + this.password + this.name + this.position + this.authority;
 	}
 }

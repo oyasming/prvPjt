@@ -23,7 +23,7 @@
 		</tr>
 		<c:forEach var="data" items="${list}">
 			<c:if test="${(data.authority == '0' and sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities == '[0]') or data.authority != '0'}">
-				<tr align="center">>
+				<tr align="center">
 					<td align="center">${data.name }</td>
 					<td align="center">${data.username }</td>
 					<td align="center">${data.position }</td>					
