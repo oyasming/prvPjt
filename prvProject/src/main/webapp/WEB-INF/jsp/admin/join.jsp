@@ -12,33 +12,32 @@
 <script type="text/javascript" src="/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="/js/messages_ko.min.js"></script>
 <script>
-$(function(){
-	$('#nameCheck').click( function() {
+$(document).ready(function(){
+	$('#username').blur( function() {
         var username = $("#username").val();
-    // 사용자가 getResult 버튼을 눌렀을 때 텍스트 노드에 있는 결과값을 지워준다.
         $.ajax({
             url:'/duplicateUsernameCheck.do',
-            dataType:'String',
-        // 서버가 리턴해주는 데이터 타입이 json이다.
+        	dataType:"json",
             type:'POST',
             data:{'username':username},
-        // data 속성 내부에 또다른 {}가 있다. 중괄호 내부는 객체이다.
-            // data: 서버에 전송할 데이터로서 값은 key와 value로 이루어진 객체
-            success:function(result){
-    // 인자 result에는 서버에서 리턴해준 배열이 들어감
-            // 배열이 들어온 이유는 dataType속성을 JSON으로 했기 때문에 리턴되는 데이터가 텍스트더라도 내부적으로 그 데이터를 
-            // JSON으로 해석하여 배열로 변환
-            // 그래서 배열에 있는 result값을 체크하면 result가 true라면 성공 이벤트 관련 로직을 출력한다.
-            // 서버와의 통신이 성공하면 호출되는 이벤트 핸들러인 function(result)
-            // result 인자에는 서버가 리턴해주는 데이터가 들어감
-            	$('#feedback').html(result);
-                alert("result : " + result);
-    //result['result']는 연상 배열인가 확인하자
+            success:function(data){
+                //alert("result : " + result.data.result);
+            	if(data.length==0){
+            		alert("조회 오류");
+            	}else{
+	            	if (data.result == "true") {
+	            		//alert("이미 존재하는 ID 입니다.");
+	            		$("font#duplicateCheck").css("color", "red");
+	            		$("font#duplicateCheck").html("이미 존재하는 ID 입니다.");
+	            	} else {
+	            		//alert("사용 가능한 ID 입니다.");
+	            		$("font#duplicateCheck").css("color", "blue");
+	            		$("font#duplicateCheck").html("사용 가능한 ID 입니다.");
+	            	}
+            	}
             },
-            error: function (e) {
-
-            	$('#feedback').html(e);
-
+            error: function (request,status,error) {
+            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
         });
     });
@@ -128,7 +127,7 @@ $(function(){
 					<input type="text" id="username" name="username" required="required"/>
 					<input type="hidden" id="seq" name="seq"/>
 				</td>
-				<td><button id="nameCheck" type="button">중복확인</button></td>
+				<td><font id="duplicateCheck" name="duplicateCheck" ></font></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
@@ -165,16 +164,5 @@ $(function(){
 			</tr>
 		</table>
 	</form>
-	<font id='feedback' color="blue">
-	</font>
-	<table>
-		<c:forEach var="data" items="${bindingError}">
-			<tr align="center">
-				<td align="center">${data.objectName }</td>
-				<td align="center">${data.defaultMessage }</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<!-- 로그인 시 사용자 이름 표시 필요 -->
 </body>
 </html>

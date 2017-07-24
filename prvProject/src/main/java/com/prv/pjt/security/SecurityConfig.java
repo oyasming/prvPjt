@@ -69,6 +69,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.dataSource(dataSource)
 			.passwordEncoder(bCryptPasswordEncoder);
 	}
-
-	
 }

@@ -1,7 +1,9 @@
 package com.prv.pjt.controller;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -127,16 +129,17 @@ public class PrvPjtController {
 	
 	// TODO ajax 아이디 중복 체크 구현 필요. 될려나
 	@PostMapping("duplicateUsernameCheck.do")
-	@ResponseBody
-	public String duplicateUsernameCheck(String username) {
+	public @ResponseBody Map<String, Object> duplicateUsernameCheck(String username) {
 		System.out.println("call duplicateUsernameCheck");
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if (userRepository.findUserByUsername(username) != null) {
-			System.out.println("False");
-			return "False";
+			System.out.println("true");
+			resultMap.put("result", "true");
 		} else {
-			System.out.println("True");
-			return "True";
+			System.out.println("false");
+			resultMap.put("result", "false");
 		}
+		return resultMap;
 	}
 
 }
