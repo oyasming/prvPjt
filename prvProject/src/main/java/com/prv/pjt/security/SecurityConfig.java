@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.prv.pjt.handler.FailureLoginHandler;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -47,7 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()
 			.csrf().disable()
 			.formLogin().loginPage("/login.do")
-			.failureUrl("/login.do?error=true").defaultSuccessUrl("/index.do")
+			//.failureUrl("/login.do?error=true")
+			.failureHandler(new FailureLoginHandler())
+			.defaultSuccessUrl("/index.do")
 			.usernameParameter("username").passwordParameter("password")
 			.and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logoutProcess.do"))

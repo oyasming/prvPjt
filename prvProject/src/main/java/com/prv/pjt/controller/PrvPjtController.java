@@ -69,7 +69,7 @@ public class PrvPjtController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println("login.do username :" + authentication.getName());
+//        System.out.println("login.do username :" + authentication.getName());
         if (authentication.getName() != "anonymousUser" ) {
             modelAndView.addObject("username", authentication.getName());
             modelAndView.setViewName("logout");

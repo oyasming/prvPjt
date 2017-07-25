@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
 </head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/webjars/jquery/2.2.4/jquery.js"></script>
 <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="/js/messages_ko.min.js"></script>
@@ -60,8 +60,8 @@ $(document).ready(function(){
         rules: {
             username: {
                 required : true
-                //minlength : 5,
-                //remote: "/check_id.jsp"
+                //,minlength : 5,
+                //,remote: "/duplicateUsernameCheck.do"
             },
             password: {
                 required : true,
@@ -126,8 +126,9 @@ $(document).ready(function(){
 				<td colspan="2">
 					<input type="text" id="username" name="username" required="required"/>
 					<input type="hidden" id="seq" name="seq"/>
+					<font id="duplicateCheck" name="duplicateCheck" ></font>
 				</td>
-				<td><font id="duplicateCheck" name="duplicateCheck" ></font></td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>

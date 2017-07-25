@@ -32,8 +32,14 @@
 			</tr>
 		</table>
 	</form>
-	<c:if test="${not empty param.error}">
-		<div align="center"><font color="FF0000" size="7">Id or Password invalid, please verify</font></div>
+	<c:if test="${not empty param.error and param.error == 'bad'}">
+		<div align="left"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<font color="FF0000" size="4">Id or Password invalid, please verify</font></div>
+	</c:if>
+	<c:if test="${not empty param.error and param.error == 'db'}">
+		<div align="left"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<font color="FF0000" size="4">DB Connect Failed</font></div>
+	</c:if>
+	<c:if test="${not empty param.error and param.error == 'unknown'}">
+		<div align="left"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<font color="FF0000" size="4">unknown error</font></div>
 	</c:if>
 	<!-- 
 	<div align="center" th:if="${param.error} == true" th:text="Id or Password invalid, please verify">
