@@ -9,13 +9,19 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -67,11 +73,13 @@ public class PrvPjtController {
 	public ModelAndView login(User user, HttpSession session) {
 		System.out.println("call login");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User userExists = userService.findByUsername(authentication.getName());
 
         ModelAndView modelAndView = new ModelAndView();
 //        System.out.println("login.do username :" + authentication.getName());
         if (authentication.getName() != "anonymousUser" ) {
-            modelAndView.addObject("username", authentication.getName());
+            modelAndView.addObject("username", userExists.getUsername());
+            modelAndView.addObject("seq", userExists.getSeq());
             modelAndView.setViewName("logout");
         } else {
             modelAndView.setViewName("login");
@@ -81,12 +89,12 @@ public class PrvPjtController {
 	}
 	
 	@GetMapping("admin.do")
-	public ModelAndView admin(Model model) {
+	public ModelAndView admin(@PageableDefault(sort = { "seq" }, direction = Direction.ASC, size = 10) Pageable pageable) {
 		System.out.println("call admin");
-		List<User> list = (List<User>) userRepository.findAll();
-		model.addAttribute("list", list);
+		Page<User> list = (Page<User>) userRepository.findAll(pageable);
 
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("list", list);
         modelAndView.setViewName("/admin/main");
 
 		return modelAndView;
@@ -127,12 +135,11 @@ public class PrvPjtController {
 		return modelAndView;
 	}
 	
-	// TODO ajax 아이디 중복 체크 구현 필요. 될려나
 	@PostMapping("duplicateUsernameCheck.do")
 	public @ResponseBody Map<String, Object> duplicateUsernameCheck(String username) {
-		System.out.println("call duplicateUsernameCheck");
+		System.out.println("call duplicateUsernameCheck :: [" + username + "] " + (userRepository.findUserByUsername(username) != null));
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if (userRepository.findUserByUsername(username) != null) {
+		if (userRepository.findUserByUsername(username) != null || username.length() < 6) {
 			System.out.println("true");
 			resultMap.put("result", "true");
 		} else {
@@ -142,4 +149,83 @@ public class PrvPjtController {
 		return resultMap;
 	}
 
+	@GetMapping("edit.do/{seq}")
+	public ModelAndView viewUser(@PathVariable int seq) {
+		System.out.println("call " + seq + "/viewEdit");
+        ModelAndView modelAndView = new ModelAndView();
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User userExists = userRepository.findUserBySeq(seq);
+        
+        if (userExists == null) {
+        	System.out.println("none");
+            //modelAndView.addObject("errorMessage", "사용자를 찾을 수 없습니다.");
+            modelAndView.setViewName("redirect:/logoutProcess.do");
+        } else if (userExists != null && !checkAdminOrUserAuth(authentication, userExists)) {
+            //modelAndView.addObject("errorMessage", "권한 없는 요청입니다.");
+            modelAndView.setViewName("redirect:/logoutProcess.do");
+        } else {
+            modelAndView.addObject("user", userExists);
+            modelAndView.setViewName("/edit");
+        }
+		return modelAndView;
+	}
+	
+	@PostMapping("edit.do/{seq}")
+	public ModelAndView editUser(@PathVariable int seq,@Valid User user,BindingResult bindingResult) {
+		System.out.println("call " + seq + "/Edit");
+        ModelAndView modelAndView = new ModelAndView();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User userExists = userService.findByUsername(user.getUsername());
+        User userOrigin = userRepository.findUserBySeq(seq);
+        
+        if (checkAdminOrUserAuth(authentication, userOrigin)) {
+            modelAndView.setViewName("redirect:/logoutProcess.do");
+        }
+        
+        if (userExists != null && userOrigin.getSeq() != userExists.getSeq()) {
+            bindingResult
+                    .rejectValue("username", "error.user",
+                            "There is already a user registered with the username provided");
+        }
+        if (bindingResult.hasErrors()) {
+        	List<ObjectError> list = bindingResult.getAllErrors();
+        	modelAndView.addObject("bindingError", list);
+        	int errCnt = 0;
+        	boolean passwordEmpty = false;
+        	for (Iterator<ObjectError> iterator = list.iterator(); iterator.hasNext();) {
+				ObjectError objectError = (ObjectError) iterator.next();
+				System.out.println(objectError.getDefaultMessage() + " :: code = " + objectError.getCode() + " :: object = " + objectError.getObjectName());
+				System.out.println(objectError.getCode().equals("NotEmpty"));
+				System.out.println(objectError.getDefaultMessage().equals("*Please provide an password"));
+				errCnt++;
+				if (objectError.getCode().equals("NotEmpty") && objectError.getDefaultMessage().equals("*Please provide an password")) {
+					passwordEmpty = true;
+				}
+			}
+        	if (errCnt == 2 && passwordEmpty) {
+				userService.editUser(user);
+        	}
+    		System.out.println("errCnt : " + errCnt + ", passwordEmpty : " + passwordEmpty);
+            modelAndView.setViewName("redirect:/admin.do");
+        } else {
+    		userService.editUser(user);
+            modelAndView.setViewName("redirect:/admin.do");
+        }
+		return modelAndView;
+	}
+	
+	private boolean checkAdminOrUserAuth(Authentication authentication, User user) {
+		Iterator<GrantedAuthority> iter = (Iterator<GrantedAuthority>) authentication.getAuthorities().iterator();
+        int auth = 2;
+        while (iter.hasNext()) {
+        	auth = Integer.parseInt(iter.next().toString());
+		}
+        if (auth > 1 && !authentication.getName().equals(user.getUsername())){
+    		return false;
+        } else {
+        	return true;
+        }
+	}
 }

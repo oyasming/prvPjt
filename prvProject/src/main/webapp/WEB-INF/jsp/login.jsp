@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
 	<!-- 링크 및 관리자 권한 확인하여 관리자 메뉴 출력 필요 -->
@@ -20,12 +21,12 @@
 				<td colspan="2" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>회원아이디 </td>
 				<td colspan="2"><input id="username" name="username" type="text"/> </td>
-				<td rowspan="2"> <input type="submit" value="로그인" height="40px"/></td>
 			</tr>
 			<tr align="center">
 				<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td>비밀번호 </td>
 				<td colspan="2"><input id="password" name="password" type="password"/> </td>
+				<td rowspan="2"> <input type="submit" value="로그인" height="40px"/></td>
 			</tr>
 			<tr>
 				<td colspan="6"><br><b>회원로그인안내</b><br>편리한 서비스 이용을 위하여<br>아이디,패스워드 입력 하신 후 로그인 버튼을 눌러주세요.</td>

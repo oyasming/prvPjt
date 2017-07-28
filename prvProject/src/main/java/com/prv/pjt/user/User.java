@@ -5,10 +5,10 @@ import javax.persistence.Entity;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name="users")
@@ -20,12 +20,13 @@ public class User {
 	
 	@Column(name = "username")
 	@Length(min=6, message="6글자 이상 입력해 주십시오.")
-    @NotEmpty(message = "*Please provide an email")
+    @NotEmpty(message = "*Please provide an username")
 	private String username;
 
 	@Column(name = "password")
 	@Length(min=6, message="6글자 이상 입력해 주십시오.")
-    @NotEmpty(message = "*Please provide an email")
+    @NotEmpty(message = "*Please provide an password")
+//	@Pattern(regexp="/^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[\\d!@@#$%^&amp;+=]).*$/")
 //	@Transient
 	private String password;
 
@@ -39,7 +40,31 @@ public class User {
 
 	@Column(name = "authority")
 	private int authority;
+
+	@Column(name = "phone_no")
+	@Pattern(regexp="^\\d{2,3}-\\d{3,4}-\\d{4}$", message="Invalid phone number!!")
+	private String phone_no;
 	
+	@Column(name = "mobile_no")
+	@Pattern(regexp="^01\\d{1}-\\d{3,4}-\\d{4}$", message="Invalid mobile number!!")
+	private String mobile_no;
+
+	@Column(name = "email")
+	@Pattern(regexp="^[_0-9a-zA-Z-]+@[0-9a-zA-Z]+(.[_0-9a-zA-Z-]+)*$", message="Invalid email address!")
+	private String email;
+
+	@Column(name = "post1")
+	private String post1;
+	
+	@Column(name = "post2")
+	private String post2;
+	
+	@Column(name = "address1")
+	private String address1;
+	
+	@Column(name = "address2")
+	private String address2;
+		
 	public User() {
 //		super();
 		// TODO Auto-generated constructor stub
@@ -93,7 +118,49 @@ public class User {
 	public void setAuthority(int authority) {
 		this.authority = authority;
 	}
-	
+	public String getPhone_no() {
+		return phone_no;
+	}
+	public void setPhone_no(String phone_no) {
+		this.phone_no = phone_no;
+	}
+	public String getMobile_no() {
+		return mobile_no;
+	}
+	public void setMobile_no(String mobile_no) {
+		this.mobile_no = mobile_no;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPost1() {
+		return post1;
+	}
+	public void setPost1(String post1) {
+		this.post1 = post1;
+	}
+	public String getPost2() {
+		return post2;
+	}
+	public void setPost2(String post2) {
+		this.post2 = post2;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
 	@Override
 	public String toString() {
 		return this.seq + this.username + this.password + this.name + this.position + this.authority;

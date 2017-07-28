@@ -6,14 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	<a href="/index.do">HOME</a> | 
-	<a href="/customer.do">CONTACT US</a> | 
-	<a href="/login.do">AGILIN MEMBER</a>
-	<c:if test="${not empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] and (sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] == '0' or sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] == '1')}">
-		 | <a href="/admin.do">ADMIN PAGE</a>
-	</c:if>
-<br><br><br>
+	<div align="center">
+		<a href="/index.do">HOME</a> | 
+		<a href="/customer.do">CONTACT US</a> | 
+		<a href="/login.do">AGILIN MEMBER</a>
+		<c:if test="${not empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] and (sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] == '0' or sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] == '1')}">
+			 | <a href="/admin.do">ADMIN PAGE</a>
+		</c:if>
+		<br><br><br>
+	</div>
 </body>
 </html>

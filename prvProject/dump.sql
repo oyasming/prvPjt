@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `prv_pjt`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `prv_pjt` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `prv_pjt`;
-
---
 -- Table structure for table `users`
 --
 
@@ -38,6 +30,13 @@ CREATE TABLE `users` (
   `position` varchar(45) NOT NULL,
   `authority` int(10) unsigned NOT NULL,
   `enabled` int(10) unsigned NOT NULL DEFAULT '1',
+  `phone_no` varchar(20) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `post1` varchar(3) DEFAULT NULL,
+  `post2` varchar(3) DEFAULT NULL,
+  `address1` varchar(255) DEFAULT NULL,
+  `address2` varchar(255) DEFAULT NULL,
+  `mobile_no` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`seq`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -48,7 +47,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (20150001,'superadmin','$2a$10$BXU3YkWN7JYRV.dkcN2zxeko4fYf7uqlisZfpcAkBEpwkLnkdz9Ha','최고관리자','관리자',0,1),(20150002,'sskang','$2a$10$BXU3YkWN7JYRV.dkcN2zxeko4fYf7uqlisZfpcAkBEpwkLnkdz9Ha','강선석','차장',1,1),(20170001,'oyasming','$2a$10$sRORDAiCTBqquWIU72ggJe.FoYUnQmhnCFJQwXSoE9KD2UUMaNYbW','박지완','사원',2,1);
+INSERT INTO `users` VALUES (20150001,'superadmin','$2a$10$BXU3YkWN7JYRV.dkcN2zxeko4fYf7uqlisZfpcAkBEpwkLnkdz9Ha','최고관리자','관리자',0,1,'042-472-2094','',NULL,NULL,'','',NULL),(20150002,'sskang','$2a$10$BXU3YkWN7JYRV.dkcN2zxeko4fYf7uqlisZfpcAkBEpwkLnkdz9Ha','강선석','차장',1,1,'','',NULL,NULL,'','',NULL),(20170001,'oyasming','$2a$10$sRORDAiCTBqquWIU72ggJe.FoYUnQmhnCFJQwXSoE9KD2UUMaNYbW','박지완','사원',2,1,'','',NULL,NULL,'','',NULL),(20170002,'test123','$2a$10$eOp7NvsnL6IqaT9EuL/v1uzWSffoykTzDVVpl1iSi3FvwbwoQToby','김실험1','피실험자1',2,1,'02-487-4875','test@test.com','302','808','대전 서구 월평동로 1 (갈마동)','대전 서구 갈마동 1465','010-2548-6543');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-24 13:57:03
+-- Dump completed on 2017-07-28 17:42:42

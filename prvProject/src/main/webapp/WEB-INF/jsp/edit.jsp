@@ -12,30 +12,24 @@
 <script type="text/javascript" src="/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="/js/messages_ko.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<style type="text/css">
-	.my_box {
-		width: 314px;
-		padding: 2px 2px 2px 2px; /* 상, 우, 좌, 하 */
-		text-align: left; /* left, center, right */
-		border: #888888 1px solid;
-		background-color: #FFFFFF;
-		/* 테두리 각각의 색상 및 두께를 지정할때 사용합니다
-		border-right: #888888 1px solid;
-		border-left: #888888 1px solid;
-		border-top: #888888 1px solid;
-		border-bottom: #888888 1px solid;
-		*/
-		/* 글꼴을 따로 지정할 수 있다.
-		font-family: 궁서, Gulim, 'Times New Roman';
-		*/
-		/*color: #0000ff;
-		font-size: 10pt; */
-		/*font-weight: normal;*/ /* normal, bold, bolder, lighter, 100, 200, 300, 400, 500, 600, 700, 800, 900 */
-		/*font-style: normal;*/ /* normal, italic, oblique */;
-    }
-</style>
 <script>
+
+function setLabel(data) {
+
+	if ('${user.username}' == $("#username").val()) {
+		$("font#duplicateCheck").html("");
+	} else if (data.result == "true") {
+		//alert("이미 존재하는 ID 입니다.");
+		$("font#duplicateCheck").css("color", "red");
+		$("font#duplicateCheck").html("사용 불가한 ID 입니다.");
+	} else {
+		//alert("사용 가능한 ID 입니다.");
+		$("font#duplicateCheck").css("color", "blue");
+		$("font#duplicateCheck").html("사용 가능한 ID 입니다.");
+	}
+};
 $(document).ready(function(){
+	
 	$('#username').blur( function() {
         var username = $("#username").val();
         $.ajax({
@@ -44,19 +38,22 @@ $(document).ready(function(){
             type:'POST',
             data:{'username':username},
             success:function(data){
-                //alert("result : " + result.data.result);
             	if(data.length==0){
             		alert("조회 오류");
             	}else{
-	            	if (data.result == "true") {
+            		/*
+	            	if ('${user.username}' == $("#username").val()) {
+	            		$("font#duplicateCheck").html("");
+	            	} else if (data.result == "true") {
 	            		//alert("이미 존재하는 ID 입니다.");
 	            		$("font#duplicateCheck").css("color", "red");
-	            		$("font#duplicateCheck").html("사용 불가한 ID 입니다.");
+	            		$("font#duplicateCheck").html("이미 존재하는 ID 입니다.");
 	            	} else {
 	            		//alert("사용 가능한 ID 입니다.");
 	            		$("font#duplicateCheck").css("color", "blue");
 	            		$("font#duplicateCheck").html("사용 가능한 ID 입니다.");
-	            	}
+	            	}*/
+            		setLabel(data);
             	}
             },
             error: function (request,status,error) {
@@ -109,9 +106,39 @@ $(document).ready(function(){
 	        top : (window.screen.height / 2) - (height / 2) //팝업창이 실행될때 위치지정
 	    });
 	});
+	
+	$('#username').blur( function() {
+        var username = $("#username").val();
+        $.ajax({
+            url:'/duplicateUsernameCheck.do',
+        	dataType:"json",
+            type:'POST',
+            data:{'username':username},
+            success:function(data){
+                //alert("result : " + result.data.result);
+            	if(data.length==0){
+            		alert("조회 오류");
+            	}else{
+	            	if (data.result == "true") {
+	            		//alert("이미 존재하는 ID 입니다.");
+	            		$("font#duplicateCheck").css("color", "red");
+	            		$("font#duplicateCheck").html("이미 존재하는 ID 입니다.");
+	            	} else {
+	            		//alert("사용 가능한 ID 입니다.");
+	            		$("font#duplicateCheck").css("color", "blue");
+	            		$("font#duplicateCheck").html("사용 가능한 ID 입니다.");
+	            	}
+            	}
+            },
+            error: function (request,status,error) {
+            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+    });
+
 
 	$.validator.methods.passwordRule = function( value, element ) {
-		return this.optional( element ) || /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\d!@@#$%^&amp;+=]).*$/.test( value );
+	  return this.optional( element ) || /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\d!@@#$%^&amp;+=]).*$/.test( value );
 	}
 	$.validator.methods.phoneRule = function( value, element ) {
 		return this.optional( element ) || /^\d{2,3}-\d{3,4}-\d{4}$/.test( value );
@@ -122,31 +149,27 @@ $(document).ready(function(){
     $("form").validate({
    		//validation이 끝난 이후의 submit 직전 추가 작업할 부분
 		submitHandler: function() {
-			var f = confirm("회원등록을 완료하겠습니까?");
+			var f = confirm("회원정보 수정을 완료하겠습니까?");
             if(f){
                 return true;
             } else {
                 return false;
             }
         },
-        errorPlacement: function(error, element) {
-			error.insertAfter(element);
-			$('#br').insertAfter(element);
-       },
         //규칙
         rules: {
             username: {
-                required : true,
-                minlength : 6
+                required : true
+                //,minlength : 5,
                 //,remote: "/duplicateUsernameCheck.do"
             },
             password: {
-                required : true,
+                required : false,
                 minlength : 9,
                 passwordRule : true
             },
             password_re: {
-                required : true,
+                required : false,
                 minlength : 9,
                 passwordRule : true,
                 equalTo : password
@@ -160,15 +183,12 @@ $(document).ready(function(){
                 minlength : 2
             },
             phone_no: {
-            	required : false,
             	phoneRule : true
             },
             mobile_no: {
-            	required : true,
             	mobileRule : true
             },
             email: {
-            	required : false,
             	email : true
             }
         },
@@ -176,8 +196,8 @@ $(document).ready(function(){
         messages : {
             username: {
                 required : "필수로 입력하세요",
-                minlength : "최소 {0}글자이상이어야 합니다"
-                //remote : "존재하는 아이디입니다" // TODO
+                //minlength : "최소 {0}글자이상이어야 합니다",
+                remote : "존재하는 아이디입니다" // TODO
             },
             password: {
                 required : "필수로 입력하세요",
@@ -202,13 +222,12 @@ $(document).ready(function(){
             	phoneRule : "올바른 번호가 아닙니다."
             },
             mobile_no: {
-            	required : "필수로 입력하세요",
             	mobileRule : "올바른 번호가 아닙니다."
             },
             email: {
             	email : "올바른 email 주소가 아닙니다."
             }
-        }
+        }	
     });
     
     var autoHypenPhone = function(str){
@@ -257,84 +276,102 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<div style="width:700px">
-		<jsp:include page="../menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
+	<jsp:include page="menu.jsp">
+		<jsp:param name="btnNO" value="0"/>
+	</jsp:include>
 	
-		<form action="/joinUser.do" method="post" name="join_form">
-			<table cellpadding="1" align="center">
-				<tr>
-					<td><font size="5"><b>·회원등록</b></font><br><br></td>
-				</tr>
-				<tr>
-					<td>
-						<input type="text" id="username" name="username" class="my_box" placeholder="아이디"/>
-						<input type="hidden" id="seq" name="seq"/>
-						<font id="duplicateCheck"></font>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="password" id="password" name="password" class="my_box" placeholder="비밀번호"/></td>
-				</tr>
-				<tr>
-					<td><input type="password" name="password_re" id="password_re" class="my_box" placeholder="비밀번호 확인"/></td>
-				</tr>
-				<tr>
-					<td><hr></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="name" name="name" class="my_box" placeholder="이름"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="position" name="position" class="my_box" placeholder="직책"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="phone_no" name="phone_no" class="my_box" placeholder="전화번호"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="mobile_no" name="mobile_no" class="my_box" placeholder="휴대전화번호"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="email" name="email" class="my_box" placeholder="E-mail"/></td>
-				</tr>
-				<tr>
-					<td><hr></td>
-				</tr>
-				<tr>
-					<td>주소</td>
-				</tr>
-				<tr>
-					<td>
-						<input id="post1" readonly="" size="5" name="post1"> - <input id="post2" readonly="" size="5" name="post2">
-						<input id="findAddress" type="button" value="우편번호찾기"><br>
-						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address1" readonly="" size="40" name="address1" placeholder="도로명주소"><br>
-						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address2" size="40" name="address2" placeholder="지번주소">
-					</td>
-				</tr>
-				<tr>
-					<td align="left">
-						등급
+	<font size="5"><b>·회원등록</b></font><br><br>
+	<form action="/edit.do/${user.seq}" method="post" name="edit_form">
+		<table cellpadding="1">
+			<tr>
+				<td>회원아이디</td>
+				<td colspan="2">
+					<input type="text" id="username" name="username" required="required" value="${user.username}"/>
+					<input type="hidden" id="seq" name="seq" value="${user.seq}"/>
+					<font id="duplicateCheck" name="duplicateCheck" ></font>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td colspan="2"><input type="password" id="password" name="password"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>비밀번호 재확인</td>
+				<td colspan="2"><input type="password" name="password_re" id="password_re"/></td>
+				<td>&nbsp; </td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td colspan="2"><input type="text" id="name" name="name" value="${user.name}" required="required"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>직책</td>
+				<td colspan="2"><input type="text" id="position" name="position" required="required" value="${user.position}"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td colspan="2"><input type="text" id="phone_no" name="phone_no" value="${user.phone_no}"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>휴대전화번호</td>
+				<td colspan="2"><input type="text" id="mobile_no" name="mobile_no" value="${user.mobile_no}"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>E-mail</td>
+				<td colspan="2"><input type="text" id="email" name="email" value="${user.email}"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="4">주소</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<input id="post1" readonly="" size="5" name="post1" value="${user.post1}"> - <input id="post2" readonly="" size="5" name="post2" value="${user.post2}">
+					<input id="findAddress" type="button" value="우편번호찾기"><br>
+					<span style="LINE-HEIGHT: 10%"><br></span>
+					<input id="address1" readonly="" size="40" name="address1" placeholder="도로명주소" value="${user.address1}"><br>
+					<span style="LINE-HEIGHT: 10%"><br></span>
+					<input id="address2" size="40" name="address2" placeholder="지번주소" value="${user.address2}">
+				</td>
+			</tr>
+			<tr>
+				<td>등급</td>
+				<td colspan="2" align="left">
+					<c:if test="${user.authority == 0}">
+						<input type="hidden" value="0" id="authority" name="authority"/>최고관리자
+					</c:if>
+					<c:if test="${user.authority != 0}">
 						<select id="authority" name="authority">
-							<option value="1" selected="selected">관리자</option>
-							<option value="2">일반</option>
+							<c:if test="${user.authority == 1}">
+								<option value="1" selected="selected">관리자</option>
+								<option value="2">일반</option>
+							</c:if>
+							<c:if test="${user.authority == 2}">
+								<option value="1">관리자</option>
+								<option value="2" selected="selected">일반</option>
+							</c:if>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td align="center">
-						<input type="submit" value="저장"/>
-						<button type="button" onclick="window.location.href='/admin.do';">목록</button>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
-	<br id="br">
+					</c:if>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="center">
+					<input type="submit" value="저장"/>
+					<button type="button" onclick="window.location.href='/admin.do';">목록</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<c:if test="${errorMessage != null }">${errorMessage}</c:if>
 </body>
 </html>

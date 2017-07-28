@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/index.do").permitAll()
 			.antMatchers("/customer.do").permitAll()
 			.antMatchers("/login.do").permitAll()
-			.antMatchers("/admin.do", "/join**").authenticated()
+			.antMatchers("/admin.do", "/join.do", "/joinUser.do", "/edit.do/**").authenticated()
 			.and()
 			.csrf().disable()
 			.formLogin().loginPage("/login.do")
