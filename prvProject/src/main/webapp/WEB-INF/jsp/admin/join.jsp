@@ -15,7 +15,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style type="text/css">
 	.my_box {
-		width: 314px;
+		width: 392px;
 		padding: 2px 2px 2px 2px; /* 상, 우, 좌, 하 */
 		text-align: left; /* left, center, right */
 		border: #888888 1px solid;
@@ -308,12 +308,12 @@ $(document).ready(function(){
 				</tr>
 				<tr>
 					<td>
-						<input id="post1" readonly="" size="5" name="post1"> - <input id="post2" readonly="" size="5" name="post2">
+						<input id="post1" readonly="readonly" size="5" name="post1"> - <input id="post2" readonly="readonly" size="5" name="post2">
 						<input id="findAddress" type="button" value="우편번호찾기"><br>
 						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address1" readonly="" size="40" name="address1" placeholder="도로명주소"><br>
+						<input id="address1" class="my_box" readonly="readonly" name="address1" placeholder="도로명주소"><br>
 						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address2" size="40" name="address2" placeholder="지번주소">
+						<input id="address2" class="my_box" name="address2" placeholder="지번주소">
 					</td>
 				</tr>
 				<tr>

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	<div align="center">
+	<div style="position: relative; left: 150px; width: 400px;">
 		<a href="/index.do">HOME</a> | 
 		<a href="/customer.do">CONTACT US</a> | 
 		<a href="/login.do">AGILIN MEMBER</a>

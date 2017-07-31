@@ -14,55 +14,7 @@
 <script type="text/javascript" src="/js/messages_ko.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-
-function setLabel(data) {
-
-	if ('${user.username}' == $("#username").val()) {
-		$("font#duplicateCheck").html("");
-	} else if (data.result == "true") {
-		//alert("이미 존재하는 ID 입니다.");
-		$("font#duplicateCheck").css("color", "red");
-		$("font#duplicateCheck").html("사용 불가한 ID 입니다.");
-	} else {
-		//alert("사용 가능한 ID 입니다.");
-		$("font#duplicateCheck").css("color", "blue");
-		$("font#duplicateCheck").html("사용 가능한 ID 입니다.");
-	}
-};
 $(document).ready(function(){
-	
-	$('#username').blur( function() {
-        var username = $("#username").val();
-        $.ajax({
-            url:'/duplicateUsernameCheck.do',
-        	dataType:"json",
-            type:'POST',
-            data:{'username':username},
-            success:function(data){
-            	if(data.length==0){
-            		alert("조회 오류");
-            	}else{
-            		/*
-	            	if ('${user.username}' == $("#username").val()) {
-	            		$("font#duplicateCheck").html("");
-	            	} else if (data.result == "true") {
-	            		//alert("이미 존재하는 ID 입니다.");
-	            		$("font#duplicateCheck").css("color", "red");
-	            		$("font#duplicateCheck").html("이미 존재하는 ID 입니다.");
-	            	} else {
-	            		//alert("사용 가능한 ID 입니다.");
-	            		$("font#duplicateCheck").css("color", "blue");
-	            		$("font#duplicateCheck").html("사용 가능한 ID 입니다.");
-	            	}*/
-            		setLabel(data);
-            	}
-            },
-            error: function (request,status,error) {
-            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
-        });
-    });
-
 	$('#findAddress').click(function () {
 	    var width = 500; //팝업창이 실행될때 위치지정
 	    var height = 600; //팝업창이 실행될때 위치지정
@@ -107,35 +59,6 @@ $(document).ready(function(){
 	        top : (window.screen.height / 2) - (height / 2) //팝업창이 실행될때 위치지정
 	    });
 	});
-	
-	$('#username').blur( function() {
-        var username = $("#username").val();
-        $.ajax({
-            url:'/duplicateUsernameCheck.do',
-        	dataType:"json",
-            type:'POST',
-            data:{'username':username},
-            success:function(data){
-                //alert("result : " + result.data.result);
-            	if(data.length==0){
-            		alert("조회 오류");
-            	}else{
-	            	if (data.result == "true") {
-	            		//alert("이미 존재하는 ID 입니다.");
-	            		$("font#duplicateCheck").css("color", "red");
-	            		$("font#duplicateCheck").html("이미 존재하는 ID 입니다.");
-	            	} else {
-	            		//alert("사용 가능한 ID 입니다.");
-	            		$("font#duplicateCheck").css("color", "blue");
-	            		$("font#duplicateCheck").html("사용 가능한 ID 입니다.");
-	            	}
-            	}
-            },
-            error: function (request,status,error) {
-            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
-        });
-    });
 
 
 	$.validator.methods.passwordRule = function( value, element ) {
@@ -157,6 +80,10 @@ $(document).ready(function(){
                 return false;
             }
         },
+        errorPlacement: function(error, element) {
+			error.insertAfter(element);
+			$('#br').insertAfter(element);
+       },
         //규칙
         rules: {
             username: {
@@ -285,14 +212,14 @@ $(document).ready(function(){
 		<form action="/edit.do/${user.seq}" method="post" name="edit_form">
 			<table class="main_table" cellpadding="1">
 				<tr>
-					<td colspan="4" align="left"><font size="5"><b>·회원등록</b></font><br><br></td>
+					<td colspan="2" align="left"><font size="5"><b>·회원등록</b></font><br><br></td>
 				</tr>
 				<tr>
-					<td>회원아이디</td>
-					<td>
-						<input type="text" id="username" name="username" required="required" value="${user.username}"/>
+					<td width="120px">회원아이디</td>
+					<td width="278px">
+						<input type="text" id="username" name="username" readonly="readonly" value="${user.username}"/>
 						<input type="hidden" id="seq" name="seq" value="${user.seq}"/>
-						<font id="duplicateCheck" name="duplicateCheck" ></font>
+						<br><font id="duplicateCheck" name="duplicateCheck" ></font>
 					</td>
 				</tr>
 				<tr>
@@ -312,6 +239,9 @@ $(document).ready(function(){
 					<td><input type="text" id="position" name="position" required="required" value="${user.position}"/></td>
 				</tr>
 				<tr>
+					<td colspan="2"><hr></td>
+				</tr>
+				<tr>
 					<td>전화번호</td>
 					<td><input type="text" id="phone_no" name="phone_no" value="${user.phone_no}"/></td>
 				</tr>
@@ -322,6 +252,9 @@ $(document).ready(function(){
 				<tr>
 					<td>E-mail</td>
 					<td><input type="text" id="email" name="email" value="${user.email}"/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><hr></td>
 				</tr>
 				<tr>
 					<td colspan="2">주소</td>
@@ -358,7 +291,7 @@ $(document).ready(function(){
 					<td>&nbsp;</td>
 				</tr>
 				<tr>
-					<td colspan="2">&nbsp;</td>
+					<td colspan="2"><hr></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
@@ -370,5 +303,6 @@ $(document).ready(function(){
 		</form>
 		<c:if test="${errorMessage != null }">${errorMessage}</c:if>
 	</div>
+	<br id="br">
 </body>
 </html>
