@@ -10,13 +10,14 @@
 </head>
 <body>
 	<div style="position: relative; left: 150px; width: 400px;">
-		<a href="/index.do">HOME</a> | 
-		<a href="/customer.do">CONTACT US</a> | 
+		<br>
+		¡¤<a href="/index.do">HOME</a>&nbsp; |&nbsp;
+		<a href="/customer.do">CONTACT US</a>&nbsp; |&nbsp;
 		<a href="/login.do">AGILIN MEMBER</a>
 		<c:if test="${not empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] and (sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] == '0' or sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities[0] == '1')}">
-			 | <a href="/admin.do">ADMIN PAGE</a>
+			&nbsp; |&nbsp; <a href="/admin.do">ADMIN PAGE</a>
 		</c:if>
-		<br><br><br>
+		<br><hr><br>
 	</div>
 </body>
 </html>

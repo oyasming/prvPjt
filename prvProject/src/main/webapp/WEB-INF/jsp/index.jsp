@@ -17,16 +17,14 @@
 			
 		<p style="position: relative;left: 150px; width: 400px;"> Agilin Soft Home에 오신걸 환영합니다.</p><br><br>
 		
-		<!-- 
+		<%-- 
 		${sessionScope.SPRING_SECURITY_CONTEXT.authentication.name}<br>
 		================================<br>
 		${sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities}<br>
 		================================<br>
-		<%=session.getAttribute("username") %>
 		<br>
 		==============================================<br>
-		<%=session.getAttribute("SPRING_SECURITY_CONTEXT")%>
-	<%
+	
 	 java.util.Enumeration enum1 = request.getAttributeNames();
 	 for (; enum1.hasMoreElements(); ) {
 	  String name = (String)enum1.nextElement();
@@ -45,9 +43,7 @@
 	            out.println("<BR>");
 	        }
 	    }
-	 %>
-		 -->
-	
+	 --%>
 	
 		<!-- 로그인 시 사용자 이름 표시 필요 -->
 		<c:if test="${not empty name}">

@@ -45,10 +45,6 @@
 		<c:if test="${not empty param.error and param.error == 'unknown'}">
 			<div style="position: relative;left: 150px;"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<font color="FF0000" size="4">unknown error</font></div>
 		</c:if>
-		<!-- 
-		<div align="center" th:if="${param.error} == true" th:text="Id or Password invalid, please verify">
-		</div> -->
-
 	</div>
 </body>
 </html>

@@ -13,6 +13,11 @@
 <script type="text/javascript" src="/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="/js/messages_ko.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<style type="text/css">
+.edit_input {
+	width: 248px;
+}
+</style>
 <script>
 $(document).ready(function(){
 	$('#findAddress').click(function () {
@@ -212,65 +217,65 @@ $(document).ready(function(){
 		<form action="/edit.do/${user.seq}" method="post" name="edit_form">
 			<table class="main_table" cellpadding="1">
 				<tr>
-					<td colspan="2" align="left"><font size="5"><b>·회원등록</b></font><br><br></td>
+					<td colspan="2" align="left"><p><b>·회원등록</b></p><br></td>
 				</tr>
 				<tr>
-					<td width="120px">회원아이디</td>
-					<td width="278px">
-						<input type="text" id="username" name="username" readonly="readonly" value="${user.username}"/>
+					<td width="150px">·회원아이디</td>
+					<td width="248px">
+						<input type="text" class="edit_input" id="username" name="username" readonly="readonly" value="${user.username}"/>
 						<input type="hidden" id="seq" name="seq" value="${user.seq}"/>
 						<br><font id="duplicateCheck" name="duplicateCheck" ></font>
 					</td>
 				</tr>
 				<tr>
-					<td>비밀번호</td>
-					<td><input type="password" id="password" name="password"/></td>
+					<td>·비밀번호</td>
+					<td><input type="password" class="edit_input" id="password" name="password"/></td>
 				</tr>
 				<tr>
-					<td>비밀번호 재확인</td>
-					<td><input type="password" name="password_re" id="password_re"/></td>
+					<td>·비밀번호 재확인</td>
+					<td><input type="password" class="edit_input" name="password_re" id="password_re"/></td>
 				</tr>
 				<tr>
-					<td>이름</td>
-					<td><input type="text" id="name" name="name" value="${user.name}" required="required"/></td>
+					<td>·이름</td>
+					<td><input type="text" class="edit_input" id="name" name="name" value="${user.name}" required="required"/></td>
 				</tr>
 				<tr>
-					<td>직책</td>
-					<td><input type="text" id="position" name="position" required="required" value="${user.position}"/></td>
-				</tr>
-				<tr>
-					<td colspan="2"><hr></td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td><input type="text" id="phone_no" name="phone_no" value="${user.phone_no}"/></td>
-				</tr>
-				<tr>
-					<td>휴대전화번호</td>
-					<td><input type="text" id="mobile_no" name="mobile_no" value="${user.mobile_no}"/></td>
-				</tr>
-				<tr>
-					<td>E-mail</td>
-					<td><input type="text" id="email" name="email" value="${user.email}"/></td>
+					<td>·직책</td>
+					<td><input type="text" class="edit_input" id="position" name="position" required="required" value="${user.position}"/></td>
 				</tr>
 				<tr>
 					<td colspan="2"><hr></td>
 				</tr>
 				<tr>
-					<td colspan="2">주소</td>
+					<td>·전화번호</td>
+					<td><input type="text" class="edit_input" id="phone_no" name="phone_no" value="${user.phone_no}"/></td>
+				</tr>
+				<tr>
+					<td>·휴대전화번호</td>
+					<td><input type="text" class="edit_input" id="mobile_no" name="mobile_no" value="${user.mobile_no}"/></td>
+				</tr>
+				<tr>
+					<td>·E-mail</td>
+					<td><input type="text" class="edit_input" id="email" name="email" value="${user.email}"/></td>
+				</tr>
+				<tr>
+					<td colspan="2"><hr></td>
+				</tr>
+				<tr>
+					<td colspan="2">·주소</td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						<input id="post1" readonly="" size="5" name="post1" value="${user.post1}"> - <input id="post2" readonly="" size="5" name="post2" value="${user.post2}">
 						<input id="findAddress" type="button" value="우편번호찾기"><br>
 						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address1" readonly="" size="40" name="address1" placeholder="도로명주소" value="${user.address1}"><br>
+						<input id="address1" readonly="" style="width: 398px" name="address1" placeholder="도로명주소" value="${user.address1}"><br>
 						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address2" size="40" name="address2" placeholder="지번주소" value="${user.address2}">
+						<input id="address2" style="width: 398px" name="address2" placeholder="지번주소" value="${user.address2}">
 					</td>
 				</tr>
 				<tr>
-					<td>등급</td>
+					<td>·등급</td>
 					<td align="left">
 						<c:if test="${user.authority == 0}">
 							<input type="hidden" value="0" id="authority" name="authority"/>최고관리자

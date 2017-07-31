@@ -26,55 +26,55 @@ p {
 			<jsp:param name="btnNO" value="0"/>
 		</jsp:include>
 		
-		<p><b>·회원등록</b></p><br><br>
+		<p><b>·회원정보</b></p><br>
 		<table class="main_table">
 			<tr>
-				<td width="120px">회원아이디</td>
-				<td width="278px">
+				<td width="150px">·회원아이디</td>
+				<td width="248px">
 					<label>${user.username}</label>
 					<input type="hidden" id="seq" name="seq" value="${user.seq}"/>
 				</td>
 			</tr>
 			<tr>
-				<td>이름</td>
+				<td>·이름</td>
 				<td><label>${user.name}</label></td>
 			</tr>
 			<tr>
-				<td>직책</td>
+				<td>·직책</td>
 				<td><label>${user.position}</label></td>
 			</tr>
 			<tr>
 				<td colspan="2"><hr></td>
 			</tr>
 			<tr>
-				<td>전화번호</td>
+				<td>·전화번호</td>
 				<td><label>${user.phone_no}</label></td>
 			</tr>
 			<tr>
-				<td>휴대전화번호</td>
+				<td>·휴대전화번호</td>
 				<td><label>${user.mobile_no}</label></td>
 			</tr>
 			<tr>
-				<td>E-mail</td>
+				<td>·E-mail</td>
 				<td><label>${user.email}</label></td>
 			</tr>
 			<tr>
 				<td colspan="2"><hr></td>
 			</tr>
 			<tr>
-				<td colspan="2">주소</td>
+				<td colspan="2">·주소</td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					<label style="width: 40px">${user.post1}&nbsp;</label> - <label style="width: 40px">${user.post2}&nbsp;</label>
+				<td colspan="2" style="position: relative;left: 5px;align-content: left;width: 395px">
+					<label style="width: 40px;">&nbsp;${user.post1}&nbsp;</label> - <label style="width: 40px">&nbsp;${user.post2}&nbsp;</label>
 					<span style="LINE-HEIGHT: 10%"><br></span>
-					<label style="width: 398px">${user.address1}&nbsp;</label><br>
+					<label style="width: 390px;">&nbsp;${user.address1}&nbsp;</label><br>
 					<span style="LINE-HEIGHT: 10%"><br></span>
-					<label style="width: 398px">${user.address2}&nbsp;</label>
+					<label style="width: 390px;">&nbsp;${user.address2}&nbsp;</label>
 				</td>
 			</tr>
 			<tr>
-				<td>등급</td>
+				<td>·등급</td>
 				<td align="left">
 					<c:if test="${user.authority == 0}">
 						<label>최고관리자</label>

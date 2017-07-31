@@ -21,22 +21,22 @@
 		<p style="left: 150px;position: relative;">관리자 페이지입니다.</p><br><br>
 		<table class="main_table" cellpadding="1" border="1">
 			<tr align="center" bordercolor="000000">
-				<th align="center" width="100">이름</th>
-				<th align="center" width="100">회원아이디</th>
-				<th align="center" width="100">직책</th>
-				<th align="center" width="100">등급</th>
+				<th style="text-align: center;width: 100px;">이름</th>
+				<th style="text-align: center;width: 100px;">회원아이디</th>
+				<th style="text-align: center;width: 100px;">직책</th>
+				<th style="text-align: center;width: 100px;">등급</th>
 			</tr>
 			<c:forEach var="data" items="${list.content}">
 				<c:if test="${(data.authority == '0' and sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities == '[0]') or data.authority != '0'}">
 					<tr align="center">
-						<td align="center"><a href="/view.do/${data.seq}">${data.name }</a></td>
-						<td align="center">${data.username }</td>
-						<td align="center">${data.position }</td>					
-						<td align="center">
+						<td align="left"><a href="/view.do/${data.seq}">&nbsp;${data.name}</a></td>
+						<td align="left">&nbsp;${data.username}</td>
+						<td align="left">&nbsp;${data.position}</td>					
+						<td align="left">
 							<c:choose>
-								<c:when test="${data.authority == '0'}">최고관리자</c:when>
-								<c:when test="${data.authority == '1'}">관리자</c:when>
-								<c:otherwise>일반</c:otherwise>
+								<c:when test="${data.authority == '0'}">&nbsp;최고관리자</c:when>
+								<c:when test="${data.authority == '1'}">&nbsp;관리자</c:when>
+								<c:otherwise>&nbsp;일반</c:otherwise>
 							</c:choose>
 						</td>
 					</tr>
