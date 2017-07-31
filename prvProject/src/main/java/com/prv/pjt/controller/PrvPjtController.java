@@ -148,6 +148,28 @@ public class PrvPjtController {
 		}
 		return resultMap;
 	}
+	
+	@GetMapping("view.do/{seq}")
+	public ModelAndView onlyViewUser(@PathVariable int seq) {
+		System.out.println("call " + seq + "/viewEdit");
+        ModelAndView modelAndView = new ModelAndView();
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User userExists = userRepository.findUserBySeq(seq);
+        
+        if (userExists == null) {
+        	System.out.println("none");
+            //modelAndView.addObject("errorMessage", "사용자를 찾을 수 없습니다.");
+            modelAndView.setViewName("redirect:/logoutProcess.do");
+        } else if (userExists != null && !checkAdminOrUserAuth(authentication, userExists)) {
+            //modelAndView.addObject("errorMessage", "권한 없는 요청입니다.");
+            modelAndView.setViewName("redirect:/logoutProcess.do");
+        } else {
+            modelAndView.addObject("user", userExists);
+            modelAndView.setViewName("/userView");
+        }
+		return modelAndView;
+	}
 
 	@GetMapping("edit.do/{seq}")
 	public ModelAndView viewUser(@PathVariable int seq) {

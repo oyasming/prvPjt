@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/main.css">
 <script src="/webjars/jquery/2.2.4/jquery.js"></script>
 <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/js/additional-methods.min.js"></script>
@@ -168,7 +169,7 @@ $(document).ready(function(){
             	mobileRule : true
             },
             email: {
-            	required : false,
+            	required : true,
             	email : true
             }
         },
@@ -206,6 +207,7 @@ $(document).ready(function(){
             	mobileRule : "올바른 번호가 아닙니다."
             },
             email: {
+            	required : "필수로 입력하세요",
             	email : "올바른 email 주소가 아닙니다."
             }
         }
@@ -257,13 +259,13 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<div style="width:700px">
+	<div class="main_div" style="width:700px">
 		<jsp:include page="../menu.jsp">
 			<jsp:param name="btnNO" value="0"/>
 		</jsp:include>
 	
 		<form action="/joinUser.do" method="post" name="join_form">
-			<table cellpadding="1" align="center">
+			<table class="main_table" cellpadding="1">
 				<tr>
 					<td><font size="5"><b>·회원등록</b></font><br><br></td>
 				</tr>
@@ -271,7 +273,7 @@ $(document).ready(function(){
 					<td>
 						<input type="text" id="username" name="username" class="my_box" placeholder="아이디"/>
 						<input type="hidden" id="seq" name="seq"/>
-						<font id="duplicateCheck"></font>
+						<br><font id="duplicateCheck"></font>
 					</td>
 				</tr>
 				<tr>

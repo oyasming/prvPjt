@@ -8,18 +8,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/main.css">
 <fmt:parseNumber var="pages" integerOnly="true" value="${list.number / 10}"/>
 <fmt:parseNumber var="totalPages" integerOnly="true" value="${list.totalPages / 10}"/>
 </head>
 <body>
-	<!-- 링크 및 관리자 권한 확인하여 관리자 메뉴 출력 필요 -->
-	<jsp:include page="../menu.jsp">
-		<jsp:param name="btnNO" value="0"/>
-	</jsp:include>
-	
-	<div style="width: 410px;">
-	<p align="left">관리자 페이지입니다.</p><br><br>
-		<table align="center" cellpadding="1" border="1">
+	<div class="main_div">
+		<jsp:include page="../menu.jsp">
+			<jsp:param name="btnNO" value="0"/>
+		</jsp:include>
+		
+		<p style="left: 150px;position: relative;">관리자 페이지입니다.</p><br><br>
+		<table class="main_table" cellpadding="1" border="1">
 			<tr align="center" bordercolor="000000">
 				<th align="center" width="100">이름</th>
 				<th align="center" width="100">회원아이디</th>
@@ -29,7 +29,7 @@
 			<c:forEach var="data" items="${list.content}">
 				<c:if test="${(data.authority == '0' and sessionScope.SPRING_SECURITY_CONTEXT.authentication.authorities == '[0]') or data.authority != '0'}">
 					<tr align="center">
-						<td align="center"><a href="/edit.do/${data.seq}">${data.name }</a></td>
+						<td align="center"><a href="/view.do/${data.seq}">${data.name }</a></td>
 						<td align="center">${data.username }</td>
 						<td align="center">${data.position }</td>					
 						<td align="center">
@@ -44,14 +44,14 @@
 			</c:forEach>
 		</table>
 		<br>
-		<div align="center">
+		<div align="center" style="position:relative; left: 150px; width: 400px">
 			<c:forEach begin="0" end="${pages == totalPages ? list.totalPages % 10 - 1 : 9}" var="pageCnt">
 				<a href="/admin.do?page=${pageCnt}">[${pageCnt + 1}]</a>
 			</c:forEach>
+			<form action="/join.do" align="right">
+				<input type="submit" value="회원등록"></input>
+			</form>
 		</div>
-		<form action="/join.do" align="right">
-			<input type="submit" value="회원등록"></input>
-		</form>
 		<!-- 
 		<ul class="pager">
 		    <c:if test="${!list.first}">

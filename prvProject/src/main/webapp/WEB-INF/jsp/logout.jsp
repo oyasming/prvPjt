@@ -6,35 +6,47 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Agilin Soft</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="/webjars/jquery/2.2.4/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/main.css">
+<script src="/webjars/jquery/2.2.4/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script>
-</script>
+<style type="text/css">
+p {
+	position: relative;
+	left: 150px;
+		
+}
+</style>
 <body>
-	<!-- 링크 및 관리자 권한 확인하여 관리자 메뉴 출력 필요 -->
-	<jsp:include page="menu.jsp">
-		<jsp:param name="btnNO" value="0"/>
-	</jsp:include>
-	
-	어질인소프트<br><br>
-	<form action="/logoutProcess.do" method="post">
-		<table cellpadding="1">
-			<tr align="center">
-				<td colspan="2" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>회원아이디 </td>
-				<td colspan="2">${username} </td>
-				<td rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="로그아웃" height="40px"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-			</tr>
-			<tr align="center">
-				<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td>회원정보 수정 </td>
-				<td colspan="2"> <!-- <input id="password" name="password" type="password"/> --> </td>
-			</tr>
-		</table>
-	</form>
-	<button id="editUser" name="editUser" onclick="window.location.href='/edit.do/${seq}';">회원정보 수정</button>
+	<div class="main_div">
+		<jsp:include page="menu.jsp">
+			<jsp:param name="btnNO" value="0"/>
+		</jsp:include>
+		
+		<p>어질인소프트</p><br><br>
+		<form action="/logoutProcess.do" method="post">
+			<table class="main_table" cellpadding="1">
+				<tr align="center">
+					<td colspan="2" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>회원아이디 </td>
+					<td colspan="2">${username} </td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="로그아웃" height="40px"/>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				</tr>
+				<!-- 
+				<tr align="center">
+					<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>비밀번호</td>
+					<td colspan="2"><input id="password" name="password" type="password"/></td>
+				</tr>
+				 -->
+			</table>
+		</form>
+		<br><br>
+		<div style="position: relative;left: 150px; width: 400px;">
+			<button id="editUser" name="editUser" onclick="window.location.href='/edit.do/${seq}';">회원정보 수정</button>
+		</div>
+	</div>
 </body>
 </html>
