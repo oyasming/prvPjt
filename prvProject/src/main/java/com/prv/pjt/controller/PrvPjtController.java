@@ -158,7 +158,7 @@ public class PrvPjtController {
         User userExists = userRepository.findUserBySeq(seq);
         
         if (userExists == null) {
-        	System.out.println("none");
+        	//System.out.println("none");
             //modelAndView.addObject("errorMessage", "사용자를 찾을 수 없습니다.");
             modelAndView.setViewName("redirect:/logoutProcess.do");
         } else if (userExists != null && !checkAdminOrUserAuth(authentication, userExists)) {
@@ -180,11 +180,9 @@ public class PrvPjtController {
         User userExists = userRepository.findUserBySeq(seq);
         
         if (userExists == null) {
-        	System.out.println("none");
-            //modelAndView.addObject("errorMessage", "사용자를 찾을 수 없습니다.");
+        	//System.out.println("none");
             modelAndView.setViewName("redirect:/logoutProcess.do");
         } else if (userExists != null && !checkAdminOrUserAuth(authentication, userExists)) {
-            //modelAndView.addObject("errorMessage", "권한 없는 요청입니다.");
             modelAndView.setViewName("redirect:/logoutProcess.do");
         } else {
             modelAndView.addObject("user", userExists);
@@ -219,8 +217,8 @@ public class PrvPjtController {
         	for (Iterator<ObjectError> iterator = list.iterator(); iterator.hasNext();) {
 				ObjectError objectError = (ObjectError) iterator.next();
 				System.out.println(objectError.getDefaultMessage() + " :: code = " + objectError.getCode() + " :: object = " + objectError.getObjectName());
-				System.out.println(objectError.getCode().equals("NotEmpty"));
-				System.out.println(objectError.getDefaultMessage().equals("*Please provide an password"));
+				//System.out.println(objectError.getCode().equals("NotEmpty"));
+				//System.out.println(objectError.getDefaultMessage().equals("*Please provide an password"));
 				errCnt++;
 				if (objectError.getCode().equals("NotEmpty") && objectError.getDefaultMessage().equals("*Please provide an password")) {
 					passwordEmpty = true;
@@ -230,24 +228,32 @@ public class PrvPjtController {
 				userService.editUser(user);
         	}
     		System.out.println("errCnt : " + errCnt + ", passwordEmpty : " + passwordEmpty);
-            modelAndView.setViewName("redirect:/admin.do");
+    		
+            modelAndView.setViewName(getAuthorityInAuthentication(authentication) == 2 ? "redirect:/login.do" : "redirect:/admin.do");
         } else {
     		userService.editUser(user);
-            modelAndView.setViewName("redirect:/admin.do");
+            modelAndView.setViewName(getAuthorityInAuthentication(authentication) == 2 ? "redirect:/login.do" : "redirect:/admin.do");
         }
 		return modelAndView;
 	}
 	
 	private boolean checkAdminOrUserAuth(Authentication authentication, User user) {
-		Iterator<GrantedAuthority> iter = (Iterator<GrantedAuthority>) authentication.getAuthorities().iterator();
-        int auth = 2;
-        while (iter.hasNext()) {
-        	auth = Integer.parseInt(iter.next().toString());
-		}
+		
+        int auth = getAuthorityInAuthentication(authentication);
+        
         if (auth > 1 && !authentication.getName().equals(user.getUsername())){
     		return false;
         } else {
         	return true;
         }
+	}
+	
+	private int getAuthorityInAuthentication(Authentication authentication) {
+		Iterator<GrantedAuthority> iter = (Iterator<GrantedAuthority>) authentication.getAuthorities().iterator();
+        int auth = 2;
+        while (iter.hasNext()) {
+        	auth = Integer.parseInt(iter.next().toString());
+		}
+		return auth;
 	}
 }

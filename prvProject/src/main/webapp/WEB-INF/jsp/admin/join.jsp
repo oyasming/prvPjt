@@ -73,37 +73,41 @@ $(document).ready(function(){
 	        width : width, //팝업창이 실행될때 위치지정
 	        height : height, //팝업창이 실행될때 위치지정
 	        oncomplete: function(data) {
-	             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	 
-	            // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	            var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-	            var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-	 
-	            // 법정동명이 있을 경우 추가한다.
-	            if(data.bname !== ''){
-	                extraRoadAddr += data.bname;
-	            }
-	            // 건물명이 있을 경우 추가한다.
-	            if(data.buildingName !== ''){
-	                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	            }
-	            // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	            if(extraRoadAddr !== ''){
-	                extraRoadAddr = ' (' + extraRoadAddr + ')';
-	            }
-	            // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-	            if(fullRoadAddr !== ''){
-	                fullRoadAddr += extraRoadAddr;
-	            }
-	             
-	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	            document.getElementById("post1").value = data.postcode1;
-	            document.getElementById("post2").value = data.postcode2;
-	            document.getElementById("address1").value = fullRoadAddr;
-	            document.getElementById("address2").value = data.jibunAddress;
-	 
-	            document.getElementById('address2').focus();
+	     	    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('post').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('address1').value = fullAddr;
+
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('address2').focus();
 	        }
 	    }).open({
 	        left : (window.screen.width / 2) - (width / 2), //팝업창이 실행될때 위치지정
@@ -161,7 +165,7 @@ $(document).ready(function(){
                 minlength : 2
             },
             phone_no: {
-            	required : false,
+            	required : true,
             	phoneRule : true
             },
             mobile_no: {
@@ -308,12 +312,12 @@ $(document).ready(function(){
 				</tr>
 				<tr>
 					<td>
-						<input id="post1" readonly="readonly" size="5" name="post1"> - <input id="post2" readonly="readonly" size="5" name="post2">
+						<input id="post" readonly="readonly" size="5" name="post">
 						<input id="findAddress" type="button" value="우편번호찾기"><br>
 						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address1" class="my_box" readonly="readonly" name="address1" placeholder="도로명주소"><br>
+						<input id="address1" class="my_box" readonly="readonly" name="address1" placeholder="기본 주소"><br>
 						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address2" class="my_box" name="address2" placeholder="지번주소">
+						<input id="address2" class="my_box" name="address2" placeholder="상세 주소">
 					</td>
 				</tr>
 				<tr>

@@ -66,7 +66,7 @@ p {
 			</tr>
 			<tr>
 				<td colspan="2" style="position: relative;left: 5px;align-content: left;width: 395px">
-					<label style="width: 40px;">&nbsp;${user.post1}&nbsp;</label> - <label style="width: 40px">&nbsp;${user.post2}&nbsp;</label>
+					<label style="width: 40px;">&nbsp;${user.post}&nbsp;</label>
 					<span style="LINE-HEIGHT: 10%"><br></span>
 					<label style="width: 390px;">&nbsp;${user.address1}&nbsp;</label><br>
 					<span style="LINE-HEIGHT: 10%"><br></span>
