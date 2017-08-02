@@ -1,9 +1,12 @@
 package com.prv.pjt.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -19,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -210,13 +214,25 @@ public class PrvPjtController {
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-        	List<ObjectError> list = bindingResult.getAllErrors();
+        	List<FieldError> list = bindingResult.getFieldErrors();
         	modelAndView.addObject("bindingError", list);
-        	int errCnt = 0;
+        	int errCnt = bindingResult.getErrorCount();
+        	
+        	/********************************//*
+        	System.out.println("hasErrorPass : " + bindingResult.hasFieldErrors("password"));
+        	Map<String, Object> map = bindingResult.getModel();
+        	Set<String> keySet = map.keySet();
+        	Iterator<String> iterator = keySet.iterator();
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+				Object value = map.get(key);
+				System.out.printf("key : %s , value : %s %n", key, value);
+			}*/
+        	/********************************/
         	boolean passwordEmpty = false;
-        	for (Iterator<ObjectError> iterator = list.iterator(); iterator.hasNext();) {
-				ObjectError objectError = (ObjectError) iterator.next();
-				System.out.println(objectError.getDefaultMessage() + " :: code = " + objectError.getCode() + " :: object = " + objectError.getObjectName());
+        	for (Iterator<FieldError> iiterator = list.iterator(); iiterator.hasNext();) {
+				ObjectError objectError = (FieldError) iiterator.next();
+				System.out.println("DefaultMessage : " + objectError.getDefaultMessage() + " :: code = " + objectError.getCode() + " :: object = " + objectError.getObjectName());
 				//System.out.println(objectError.getCode().equals("NotEmpty"));
 				//System.out.println(objectError.getDefaultMessage().equals("*Please provide an password"));
 				errCnt++;
@@ -224,7 +240,7 @@ public class PrvPjtController {
 					passwordEmpty = true;
 				}
 			}
-        	if (errCnt == 2 && passwordEmpty) {
+        	if ((errCnt == 2 && passwordEmpty) || !passwordEmpty) {
 				userService.editUser(user);
         	}
     		System.out.println("errCnt : " + errCnt + ", passwordEmpty : " + passwordEmpty);

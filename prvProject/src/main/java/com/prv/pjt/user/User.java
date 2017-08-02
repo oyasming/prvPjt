@@ -55,8 +55,11 @@ public class User {
 	//@Pattern(regexp="^[_0-9a-zA-Z-]+@[0-9a-zA-Z]+(.[_0-9a-zA-Z-]+)*$", message="Invalid email address!")
 	private String email;
 
-	@Column(name = "post")
-	private String post;
+	@Column(name = "post1")
+	private String post1;
+	
+	@Column(name = "post2")
+	private String post2;
 	
 	@Column(name = "address1")
 	private String address1;
@@ -135,12 +138,22 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPost() {
-		return post;
+	public String getPost1() {
+		return post1;
 	}
-	public void setPost1(String post) {
-		this.post = post;
+
+	public void setPost1(String post1) {
+		this.post1 = post1;
 	}
+
+	public String getPost2() {
+		return post2;
+	}
+
+	public void setPost2(String post2) {
+		this.post2 = post2;
+	}
+
 	public String getAddress1() {
 		return address1;
 	}

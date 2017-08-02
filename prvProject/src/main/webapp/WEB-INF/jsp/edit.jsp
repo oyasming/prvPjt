@@ -118,12 +118,15 @@ $(document).ready(function(){
                 minlength : 2
             },
             phone_no: {
+                //required : true,
             	phoneRule : true
             },
             mobile_no: {
+                required : true,
             	mobileRule : true
             },
             email: {
+                required : true,
             	emailRule : true
             }
         },
@@ -149,12 +152,15 @@ $(document).ready(function(){
                 minlength : "최소 {0}글자이상이어야 합니다"
             },
             phone_no: {
+                //required : "필수로 입력하세요",
             	phoneRule : "올바른 번호가 아닙니다."
             },
             mobile_no: {
+                required : "필수로 입력하세요",
             	mobileRule : "올바른 번호가 아닙니다."
             },
             email: {
+                required : "필수로 입력하세요",
             	emailRule : "올바른 email 주소가 아닙니다."
             }
         }	
@@ -250,11 +256,11 @@ $(document).ready(function(){
 				</tr>
 				<tr>
 					<td>·휴대전화번호</td>
-					<td><input type="text" class="edit_input" id="mobile_no" name="mobile_no" value="${user.mobile_no}"/></td>
+					<td><input type="text" class="edit_input" id="mobile_no" name="mobile_no" value="${user.mobile_no}"  required="required"/></td>
 				</tr>
 				<tr>
 					<td>·E-mail</td>
-					<td><input type="text" class="edit_input" id="email" name="email" value="${user.email}"/></td>
+					<td><input type="text" class="edit_input" id="email" name="email" value="${user.email}"  required="required"/></td>
 				</tr>
 				<tr>
 					<td colspan="2"><hr></td>
