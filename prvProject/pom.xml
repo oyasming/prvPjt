@@ -65,6 +65,13 @@
             <version>3.3.7</version>
         </dependency>
 		
+		<!-- use tiles -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		
 		<!-- JPA Data (We are going to use Repositories, Entities, Hibernate, etc...) -->
 
         <dependency>
@@ -100,6 +107,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>

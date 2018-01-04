@@ -21,10 +21,6 @@ p {
 </style>
 <body>
 	<div class="main_div">
-		<jsp:include page="menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
-		
 		<p>어질인소프트</p><br><br>
 		<form action="/logoutProcess.do" method="post">
 			<table class="main_table" cellpadding="1">

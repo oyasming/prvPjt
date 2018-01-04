@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
@@ -20,12 +21,12 @@ public class User {
 	private Integer seq;
 	
 	@Column(name = "username")
-	@Length(min=6, message="6글자 이상 입력해 주십시오.")
+	@Length(min=6, message="아이디를 6글자 이상 입력해 주십시오.")
     @NotEmpty(message = "*Please provide an username")
 	private String username;
 
 	@Column(name = "password")
-	@Length(min=6, message="6글자 이상 입력해 주십시오.")
+	@Length(min=6, message="비밀번호를 6글자 이상 입력해 주십시오.")
     @NotEmpty(message = "*Please provide an password")
 //	@Pattern(regexp="/^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[\\d!@@#$%^&amp;+=]).*$/")
 //	@Transient
@@ -43,11 +44,11 @@ public class User {
 	private int authority;
 
 	@Column(name = "phone_no")
-	@Pattern(regexp="^\\d{2,3}-\\d{3,4}-\\d{4}$", message="Invalid phone number!!")
+	//@Pattern(regexp="^\\d{2,3}+-+\\d{3,4}+-+\\d{4}$", message="Invalid phone number!!")
 	private String phone_no;
 	
 	@Column(name = "mobile_no")
-	@Pattern(regexp="^01\\d{1}-\\d{3,4}-\\d{4}$", message="Invalid mobile number!!")
+	@Pattern(regexp="^(01)\\d{1}-\\d{3,4}-\\d{4}$", message="Invalid mobile number!!")
 	private String mobile_no;
 
 	@Column(name = "email")
@@ -55,11 +56,8 @@ public class User {
 	//@Pattern(regexp="^[_0-9a-zA-Z-]+@[0-9a-zA-Z]+(.[_0-9a-zA-Z-]+)*$", message="Invalid email address!")
 	private String email;
 
-	@Column(name = "post1")
-	private String post1;
-	
-	@Column(name = "post2")
-	private String post2;
+	@Column(name = "post")
+	private String post;
 	
 	@Column(name = "address1")
 	private String address1;
@@ -138,20 +136,12 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPost1() {
-		return post1;
+	public String getPost() {
+		return post;
 	}
 
-	public void setPost1(String post1) {
-		this.post1 = post1;
-	}
-
-	public String getPost2() {
-		return post2;
-	}
-
-	public void setPost2(String post2) {
-		this.post2 = post2;
+	public void setPost(String post) {
+		this.post = post;
 	}
 
 	public String getAddress1() {

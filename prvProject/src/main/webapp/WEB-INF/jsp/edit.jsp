@@ -213,10 +213,6 @@ $(document).ready(function(){
 </head>
 <body>
 	<div class="main_div">
-		<jsp:include page="menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
-		
 		<form action="/edit.do/${user.seq}" method="post" name="edit_form">
 			<table class="main_table" cellpadding="1">
 				<tr>

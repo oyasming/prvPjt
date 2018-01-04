@@ -11,10 +11,6 @@
 </head>
 <body>
 	<div class="main_div">
-		<jsp:include page="menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
-			
 		<p style="position: relative;left: 150px; width: 400px;"> Agilin Soft Home에 오신걸 환영합니다.</p><br><br>
 		
 		<%-- 

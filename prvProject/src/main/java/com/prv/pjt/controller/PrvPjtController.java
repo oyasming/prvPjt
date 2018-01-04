@@ -170,7 +170,7 @@ public class PrvPjtController {
             modelAndView.setViewName("redirect:/logoutProcess.do");
         } else {
             modelAndView.addObject("user", userExists);
-            modelAndView.setViewName("/userView");
+            modelAndView.setViewName("userView");
         }
 		return modelAndView;
 	}
@@ -190,7 +190,7 @@ public class PrvPjtController {
             modelAndView.setViewName("redirect:/logoutProcess.do");
         } else {
             modelAndView.addObject("user", userExists);
-            modelAndView.setViewName("/edit");
+            modelAndView.setViewName("edit");
         }
 		return modelAndView;
 	}
@@ -216,8 +216,8 @@ public class PrvPjtController {
         if (bindingResult.hasErrors()) {
         	List<FieldError> list = bindingResult.getFieldErrors();
         	modelAndView.addObject("bindingError", list);
-        	int errCnt = bindingResult.getErrorCount();
-        	
+        	//int errCnt = bindingResult.getErrorCount();
+        	int errCnt = 0;
         	/********************************//*
         	System.out.println("hasErrorPass : " + bindingResult.hasFieldErrors("password"));
         	Map<String, Object> map = bindingResult.getModel();
@@ -230,22 +230,28 @@ public class PrvPjtController {
 			}*/
         	/********************************/
         	boolean passwordEmpty = false;
+        	String message = "";
         	for (Iterator<FieldError> iiterator = list.iterator(); iiterator.hasNext();) {
 				ObjectError objectError = (FieldError) iiterator.next();
 				System.out.println("DefaultMessage : " + objectError.getDefaultMessage() + " :: code = " + objectError.getCode() + " :: object = " + objectError.getObjectName());
 				//System.out.println(objectError.getCode().equals("NotEmpty"));
 				//System.out.println(objectError.getDefaultMessage().equals("*Please provide an password"));
-				errCnt++;
-				if (objectError.getCode().equals("NotEmpty") && objectError.getDefaultMessage().equals("*Please provide an password")) {
+				if ((objectError.getCode().equals("NotEmpty") && objectError.getDefaultMessage().equals("*Please provide an password"))
+				     || (objectError.getCode().equals("Length") && objectError.getDefaultMessage().equals("비밀번호를 6글자 이상 입력해 주십시오."))) {
 					passwordEmpty = true;
+				} else {
+					errCnt++;
+					message += objectError.getDefaultMessage() + " ";
 				}
 			}
-        	if ((errCnt == 2 && passwordEmpty) || !passwordEmpty) {
+        	System.out.println("errCnt : " + errCnt + ", passwordEmpty : " + passwordEmpty);
+        	if ((errCnt == 0 && passwordEmpty) || !passwordEmpty) {
 				userService.editUser(user);
+				modelAndView.setViewName(getAuthorityInAuthentication(authentication) == 2 ? "redirect:/login.do" : "redirect:/admin.do");
+        	} else {
+        		modelAndView.addObject("errorMessage", message);
+        		modelAndView.setViewName("redirect:/edit.do/" + seq);
         	}
-    		System.out.println("errCnt : " + errCnt + ", passwordEmpty : " + passwordEmpty);
-    		
-            modelAndView.setViewName(getAuthorityInAuthentication(authentication) == 2 ? "redirect:/login.do" : "redirect:/admin.do");
         } else {
     		userService.editUser(user);
             modelAndView.setViewName(getAuthorityInAuthentication(authentication) == 2 ? "redirect:/login.do" : "redirect:/admin.do");

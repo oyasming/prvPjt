@@ -14,9 +14,6 @@
 </head>
 <body>
 	<div class="main_div">
-		<jsp:include page="../menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
 		
 		<p style="left: 150px;position: relative;">관리자 페이지입니다.</p><br><br>
 		<table class="main_table" cellpadding="1" border="1">

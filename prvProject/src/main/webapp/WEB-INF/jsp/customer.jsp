@@ -17,10 +17,6 @@ p.text {
 </head>
 <body>
 	<div class="main_div">
-		<jsp:include page="menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
-		
 		<p class="text">CONTACT US</p><br><br>
 		<p class="text">042-472-2904로 문의해 주세요.</p><br><br>
 		

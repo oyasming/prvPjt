@@ -264,10 +264,6 @@ $(document).ready(function(){
 </head>
 <body>
 	<div class="main_div" style="width:700px">
-		<jsp:include page="../menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
-	
 		<form action="/joinUser.do" method="post" name="join_form">
 			<table class="main_table" cellpadding="1">
 				<tr>

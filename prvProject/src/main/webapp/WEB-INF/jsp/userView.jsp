@@ -22,10 +22,6 @@ p {
 </head>
 <body>
 	<div class="main_div">
-		<jsp:include page="menu.jsp">
-			<jsp:param name="btnNO" value="0"/>
-		</jsp:include>
-		
 		<p><b>·회원정보</b></p><br>
 		<table class="main_table">
 			<tr>
