@@ -10,6 +10,7 @@ import com.prv.pjt.user.User;
 public interface UserRepository extends JpaRepository<User, String> {
 	User findUserBySeq(int seq);
 	User findUserByUsername(String username);
+	User findPasswordByUsername(String username);
 	
 	@Query(value = "select ifnull(max(substring(concat(seq), 5, 4)), \'0000\') seq from users WHERE substring(concat(seq), 1, 4) =  year(curdate())", nativeQuery=true)
 	String findCurYearMaxSeq();

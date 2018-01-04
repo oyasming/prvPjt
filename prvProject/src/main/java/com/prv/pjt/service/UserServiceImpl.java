@@ -37,8 +37,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void editUser(User user) {
-		if (user.getPassword() == null) {
-			User originUser = findByUsername(user.getUsername());
+		User originUser;
+		if (user.getPassword() == null || "".equals(user.getPassword())) {
+			originUser = findByUsername(user.getUsername());
 			user.setPassword(originUser.getPassword());
 		} else {
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

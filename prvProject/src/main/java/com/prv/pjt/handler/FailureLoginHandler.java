@@ -17,9 +17,10 @@ public class FailureLoginHandler implements AuthenticationFailureHandler {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		System.out.println(e.getClass().getName());
-		if (e.getClass().getName() == "org.springframework.security.authentication.BadCredentialsException") {
+		if ("org.springframework.security.authentication.BadCredentialsException".equals(e.getClass().getName())) {
 			response.sendRedirect("/login.do?error=bad");
-		} else if (e.getClass().getName() == "org.springframework.security.authentication.InternalAuthenticationServiceException") {
+		} else if (("org.springframework.security.authentication.InternalAuthenticationServiceException".equals(e.getClass().getName())) 
+				    || "com.mysql.jdbc.exceptions.jdbc4.CommunicationsException".equals(e.getClass().getName())) {
 			response.sendRedirect("/login.do?error=db");
 		} else {
 			response.sendRedirect("/login.do?error=unknown");

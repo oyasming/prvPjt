@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Agilin Soft</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/main.css">
-<script src="/webjars/jquery/2.2.4/jquery.js"></script>
 <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="/js/messages_ko.min.js"></script>
@@ -210,109 +203,105 @@ $(document).ready(function(){
     });
 });
 </script>
-</head>
-<body>
-	<div class="main_div">
-		<form action="/edit.do/${user.seq}" method="post" name="edit_form">
-			<table class="main_table" cellpadding="1">
-				<tr>
-					<td colspan="2" align="left"><p><b>·회원등록</b></p><br></td>
-				</tr>
-				<tr>
-					<td width="150px">·회원아이디</td>
-					<td width="248px">
-						<label>${user.username}</label>
-						<input type="hidden" id="username" name="username" readonly="readonly" value="${user.username}"/>
-						<input type="hidden" id="seq" name="seq" value="${user.seq}"/>
-						<br><font id="duplicateCheck" name="duplicateCheck" ></font>
-					</td>
-				</tr>
-				<tr>
-					<td>·비밀번호</td>
-					<td><input type="password" class="edit_input" id="password" name="password"/></td>
-				</tr>
-				<tr>
-					<td>·비밀번호 재확인</td>
-					<td><input type="password" class="edit_input" name="password_re" id="password_re"/></td>
-				</tr>
-				<tr>
-					<td>·이름</td>
-					<td><input type="text" class="edit_input" id="name" name="name" value="${user.name}" required="required"/></td>
-				</tr>
-				<tr>
-					<td>·직책</td>
-					<td><input type="text" class="edit_input" id="position" name="position" required="required" value="${user.position}"/></td>
-				</tr>
-				<tr>
-					<td colspan="2"><hr></td>
-				</tr>
-				<tr>
-					<td>·전화번호</td>
-					<td><input type="text" class="edit_input" id="phone_no" name="phone_no" value="${user.phone_no}"/></td>
-				</tr>
-				<tr>
-					<td>·휴대전화번호</td>
-					<td><input type="text" class="edit_input" id="mobile_no" name="mobile_no" value="${user.mobile_no}"  required="required"/></td>
-				</tr>
-				<tr>
-					<td>·E-mail</td>
-					<td><input type="text" class="edit_input" id="email" name="email" value="${user.email}"  required="required"/></td>
-				</tr>
-				<tr>
-					<td colspan="2"><hr></td>
-				</tr>
-				<tr>
-					<td colspan="2">·주소</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input id="post" readonly="" size="5" name="post" value="${user.post}">
-						<input id="findAddress" type="button" value="우편번호찾기"><br>
-						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address1" readonly="" style="width: 398px" name="address1" placeholder="기본 주소" value="${user.address1}"><br>
-						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address2" style="width: 398px" name="address2" placeholder="상세 주소" value="${user.address2}">
-					</td>
-				</tr>
-				<tr>
-					<td>·등급</td>
-					<td align="left">
-						<c:choose>
-							<c:when test="${user.authority == 0}">
-								<input type="hidden" value="0" id="authority" name="authority"/>최고관리자
-							</c:when>
-							<c:when test="${user.authority == 1}">
-								<select id="authority" name="authority">
-									<c:if test="${user.authority == 1}">
-										<option value="1" selected="selected">관리자</option>
-										<option value="2">일반</option>
-									</c:if>
-									<c:if test="${user.authority == 2}">
-										<option value="1">관리자</option>
-										<option value="2" selected="selected">일반</option>
-									</c:if>
-								</select>
-							</c:when>
-							<c:otherwise>
-								<input type="hidden" value="2" id="authority" name="authority"/>일반
-							</c:otherwise>
-						</c:choose>
-					</td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td colspan="2"><hr></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="저장"/>
-						<button type="button" onclick="window.location.href='/admin.do';">목록</button>
-					</td>
-				</tr>
-			</table>
-		</form>
-		<c:if test="${errorMessage != null }">${errorMessage}</c:if>
-	</div>
-	<br id="br">
-</body>
-</html>
+<div class="main_div">
+	<form action="/edit.do/${user.seq}" method="post" name="edit_form">
+		<table class="main_table" cellpadding="1">
+			<tr>
+				<td colspan="2" align="left"><p><b>·회원등록</b></p><br></td>
+			</tr>
+			<tr>
+				<td width="150px">·회원아이디</td>
+				<td width="248px">
+					<label>${user.username}</label>
+					<input type="hidden" id="username" name="username" readonly="readonly" value="${user.username}"/>
+					<input type="hidden" id="seq" name="seq" value="${user.seq}"/>
+					<br><font id="duplicateCheck" name="duplicateCheck" ></font>
+				</td>
+			</tr>
+			<tr>
+				<td>·비밀번호</td>
+				<td><input type="password" class="edit_input" id="password" name="password"/></td>
+			</tr>
+			<tr>
+				<td>·비밀번호 재확인</td>
+				<td><input type="password" class="edit_input" name="password_re" id="password_re"/></td>
+			</tr>
+			<tr>
+				<td>·이름</td>
+				<td><input type="text" class="edit_input" id="name" name="name" value="${user.name}" required="required"/></td>
+			</tr>
+			<tr>
+				<td>·직책</td>
+				<td><input type="text" class="edit_input" id="position" name="position" required="required" value="${user.position}"/></td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr></td>
+			</tr>
+			<tr>
+				<td>·전화번호</td>
+				<td><input type="text" class="edit_input" id="phone_no" name="phone_no" value="${user.phone_no}"/></td>
+			</tr>
+			<tr>
+				<td>·휴대전화번호</td>
+				<td><input type="text" class="edit_input" id="mobile_no" name="mobile_no" value="${user.mobile_no}"  required="required"/></td>
+			</tr>
+			<tr>
+				<td>·E-mail</td>
+				<td><input type="text" class="edit_input" id="email" name="email" value="${user.email}"  required="required"/></td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr></td>
+			</tr>
+			<tr>
+				<td colspan="2">·주소</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input id="post" readonly="" size="5" name="post" value="${user.post}">
+					<input id="findAddress" type="button" value="우편번호찾기"><br>
+					<span style="LINE-HEIGHT: 10%"><br></span>
+					<input id="address1" readonly="" style="width: 398px" name="address1" placeholder="기본 주소" value="${user.address1}"><br>
+					<span style="LINE-HEIGHT: 10%"><br></span>
+					<input id="address2" style="width: 398px" name="address2" placeholder="상세 주소" value="${user.address2}">
+				</td>
+			</tr>
+			<tr>
+				<td>·등급</td>
+				<td align="left">
+					<c:choose>
+						<c:when test="${user.authority == 0}">
+							<input type="hidden" value="0" id="authority" name="authority"/>최고관리자
+						</c:when>
+						<c:when test="${user.authority == 1}">
+							<select id="authority" name="authority">
+								<c:if test="${user.authority == 1}">
+									<option value="1" selected="selected">관리자</option>
+									<option value="2">일반</option>
+								</c:if>
+								<c:if test="${user.authority == 2}">
+									<option value="1">관리자</option>
+									<option value="2" selected="selected">일반</option>
+								</c:if>
+							</select>
+						</c:when>
+						<c:otherwise>
+							<input type="hidden" value="2" id="authority" name="authority"/>일반
+						</c:otherwise>
+					</c:choose>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="저장"/>
+					<button type="button" onclick="window.location.href='/admin.do';">목록</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<c:if test="${errorMessage != null }">${errorMessage}</c:if>
+</div>
+<br id="br">

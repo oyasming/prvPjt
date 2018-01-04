@@ -247,6 +247,7 @@ public class PrvPjtController {
         	System.out.println("errCnt : " + errCnt + ", passwordEmpty : " + passwordEmpty);
         	if ((errCnt == 0 && passwordEmpty) || !passwordEmpty) {
 				userService.editUser(user);
+	            modelAndView.addObject("successMessage", "User has been updated successfully");
 				modelAndView.setViewName(getAuthorityInAuthentication(authentication) == 2 ? "redirect:/login.do" : "redirect:/admin.do");
         	} else {
         		modelAndView.addObject("errorMessage", message);

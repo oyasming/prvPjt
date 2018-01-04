@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Agilin Soft</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/main.css">
-<script src="/webjars/jquery/2.2.4/jquery.js"></script>
 <script type="text/javascript" src="/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="/js/additional-methods.min.js"></script>
 <script type="text/javascript" src="/js/messages_ko.min.js"></script>
@@ -259,84 +252,82 @@ $(document).ready(function(){
     $('#mobile_no').change(function (){
     	$(this).val(autoHypenPhone($(this).val()));
     });
+
+	$('#username').focus();
 });
 </script>
-</head>
-<body>
-	<div class="main_div" style="width:700px">
-		<form action="/joinUser.do" method="post" name="join_form">
-			<table class="main_table" cellpadding="1">
-				<tr>
-					<td><font size="5"><b>·회원등록</b></font><br><br></td>
-				</tr>
-				<tr>
-					<td>
-						<input type="text" id="username" name="username" class="my_box" placeholder="아이디"/>
-						<input type="hidden" id="seq" name="seq"/>
-						<br><font id="duplicateCheck"></font>
-					</td>
-				</tr>
-				<tr>
-					<td><input type="password" id="password" name="password" class="my_box" placeholder="비밀번호"/></td>
-				</tr>
-				<tr>
-					<td><input type="password" name="password_re" id="password_re" class="my_box" placeholder="비밀번호 확인"/></td>
-				</tr>
-				<tr>
-					<td><hr></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="name" name="name" class="my_box" placeholder="이름"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="position" name="position" class="my_box" placeholder="직책"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="phone_no" name="phone_no" class="my_box" placeholder="전화번호"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="mobile_no" name="mobile_no" class="my_box" placeholder="휴대전화번호"/></td>
-				</tr>
-				<tr>
-					<td><input type="text" id="email" name="email" class="my_box" placeholder="E-mail"/></td>
-				</tr>
-				<tr>
-					<td><hr></td>
-				</tr>
-				<tr>
-					<td>주소</td>
-				</tr>
-				<tr>
-					<td>
-						<input id="post" readonly="readonly" size="5" name="post">
-						<input id="findAddress" type="button" value="우편번호찾기"><br>
-						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address1" class="my_box" readonly="readonly" name="address1" placeholder="기본 주소"><br>
-						<span style="LINE-HEIGHT: 10%"><br></span>
-						<input id="address2" class="my_box" name="address2" placeholder="상세 주소">
-					</td>
-				</tr>
-				<tr>
-					<td align="left">
-						등급
-						<select id="authority" name="authority">
-							<option value="1" selected="selected">관리자</option>
-							<option value="2">일반</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-				</tr>
-				<tr>
-					<td align="center">
-						<input type="submit" value="저장"/>
-						<button type="button" onclick="window.location.href='/admin.do';">목록</button>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
-	<br id="br">
-</body>
-</html>
+<div class="main_div" style="width:700px">
+	<form action="/joinUser.do" method="post" name="join_form">
+		<table class="main_table" cellpadding="1">
+			<tr>
+				<td><font size="5"><b>·회원등록</b></font><br><br></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" id="username" name="username" class="my_box" placeholder="아이디"/>
+					<input type="hidden" id="seq" name="seq"/>
+					<br><font id="duplicateCheck"></font>
+				</td>
+			</tr>
+			<tr>
+				<td><input type="password" id="password" name="password" class="my_box" placeholder="비밀번호"/></td>
+			</tr>
+			<tr>
+				<td><input type="password" name="password_re" id="password_re" class="my_box" placeholder="비밀번호 확인"/></td>
+			</tr>
+			<tr>
+				<td><hr></td>
+			</tr>
+			<tr>
+				<td><input type="text" id="name" name="name" class="my_box" placeholder="이름"/></td>
+			</tr>
+			<tr>
+				<td><input type="text" id="position" name="position" class="my_box" placeholder="직책"/></td>
+			</tr>
+			<tr>
+				<td><input type="text" id="phone_no" name="phone_no" class="my_box" placeholder="전화번호"/></td>
+			</tr>
+			<tr>
+				<td><input type="text" id="mobile_no" name="mobile_no" class="my_box" placeholder="휴대전화번호"/></td>
+			</tr>
+			<tr>
+				<td><input type="text" id="email" name="email" class="my_box" placeholder="E-mail"/></td>
+			</tr>
+			<tr>
+				<td><hr></td>
+			</tr>
+			<tr>
+				<td>주소</td>
+			</tr>
+			<tr>
+				<td>
+					<input id="post" readonly="readonly" size="5" name="post">
+					<input id="findAddress" type="button" value="우편번호찾기"><br>
+					<span style="LINE-HEIGHT: 10%"><br></span>
+					<input id="address1" class="my_box" readonly="readonly" name="address1" placeholder="기본 주소"><br>
+					<span style="LINE-HEIGHT: 10%"><br></span>
+					<input id="address2" class="my_box" name="address2" placeholder="상세 주소">
+				</td>
+			</tr>
+			<tr>
+				<td align="left">
+					등급
+					<select id="authority" name="authority">
+						<option value="1" selected="selected">관리자</option>
+						<option value="2">일반</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<input type="submit" value="저장"/>
+					<button type="button" onclick="window.location.href='/admin.do';">목록</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<br id="br">
